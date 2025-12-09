@@ -234,6 +234,12 @@
     [data-level="1"]{ animation-delay:.05s; } [data-level="2"]{ animation-delay:.15s; } [data-level="3"]{ animation-delay:.25s; } [data-level="4"]{ animation-delay:.35s; }
     @keyframes orgIn{ to{ opacity:1; transform:translateY(0) scale(1); } }
 
+    /* Nom de Danis en couleur différente */
+    .org-card.me strong {
+      color:#facc15;
+      text-shadow:0 0 6px rgba(250,204,21,0.6);
+    }
+
     /* =========================== PHOTO APPRENTI =========================== */
     .photo-container { float:right; margin:0 0 1.5rem 2rem; max-width:200px; text-align:center; }
     .photo-container img {
@@ -502,6 +508,50 @@
       <h3>Structure et missions :</h3>
       <p>La DSI assure la sécurité, la maintenance, le déploiement et l’innovation des systèmes informatiques. Les alternants participent à des projets réels et aux opérations de sécurisation du réseau et des données.</p>
 
+      <h3>Missions de la DSI et outils utilisés :</h3>
+      <ul>
+        <li>
+          <strong>Support aux utilisateurs et helpdesk :</strong>
+          prise en charge des incidents, demandes de services, installation de logiciels, assistance à distance et accompagnement au quotidien.
+          <em>Outils : GLPI / outil de ticketing, suite Microsoft 365, prise en main à distance (RDP, AnyDesk/TeamViewer), messagerie Outlook, téléphone IP.</em>
+        </li>
+        <li>
+          <strong>Gestion du parc informatique :</strong>
+          inventaire et suivi des postes, imprimantes, smartphones, tablettes, écrans et périphériques, gestion des licences logicielles et renouvellements.
+          <em>Outils : inventaire matériel (GLPI ou équivalent), tableurs de suivi, Active Directory, outils de déploiement d’images (WDS/MDT, Clonezilla), outils de télédistribution.</em>
+        </li>
+        <li>
+          <strong>Administration systèmes :</strong>
+          création et gestion des comptes, groupes et droits d’accès, gestion des serveurs de fichiers, d’impression et d’applications.
+          <em>Outils : Windows Server, Active Directory, GPMC (stratégies de groupe), services de fichiers, gestion des impressions, consoles d’administration Microsoft.</em>
+        </li>
+        <li>
+          <strong>Administration réseau :</strong>
+          configuration des commutateurs, routeurs et bornes Wi-Fi, gestion des VLAN, supervision de la connectivité entre les sites et des liaisons Internet.
+          <em>Outils : consoles d’administration des équipements réseau (Cisco/HP ou équivalent), Wireshark, outils de supervision réseau (Centreon, PRTG, Zabbix), portails Wi-Fi.</em>
+        </li>
+        <li>
+          <strong>Sécurité et protection des données :</strong>
+          mise en place des politiques de sécurité, filtrage, mises à jour, contrôle des accès, durcissement des postes et serveurs.
+          <em>Outils : pare-feu/UTM, antivirus/EDR, solutions de chiffrement, filtrage web, gestionnaire de mots de passe, journaux d’événements Windows, outils d’audit.</em>
+        </li>
+        <li>
+          <strong>Sauvegarde, continuité d’activité et restauration :</strong>
+          planification des sauvegardes des serveurs et données critiques, tests de restauration, suivi de la capacité de stockage.
+          <em>Outils : solutions de sauvegarde (Veeam, Iperius Backup ou équivalent), NAS et baies de stockage, scripts de sauvegarde, tableaux de bord de supervision.</em>
+        </li>
+        <li>
+          <strong>Projets d’infrastructure et évolution du SI :</strong>
+          déploiement de nouveaux services (virtualisation, mise à jour d’OS, migration de fichiers, intégration d’applications métiers), documentation et procédures.
+          <em>Outils : plateformes de virtualisation (Hyper-V, VMware, VirtualBox), outils de gestion de projet (Planner, Trello, Jira), suites bureautiques, éditeurs de documentation (Word, Visio, Draw.io).</em>
+        </li>
+        <li>
+          <strong>Sensibilisation et formation des utilisateurs :</strong>
+          ateliers, guides et procédures pour les bonnes pratiques de sécurité, l’usage de OneDrive, de la messagerie, des outils collaboratifs et des VPN.
+          <em>Outils : présentations PowerPoint, supports PDF, intranet d’entreprise, plateformes de e-learning, outils de webconférence (Teams, Zoom).</em>
+        </li>
+      </ul>
+
       <!-- Organigramme mis à jour -->
       <div class="organigramme" aria-hidden="false">
         <div class="org-level">
@@ -520,7 +570,7 @@
         <div class="org-level">
           <div class="org-title">Alternant Technicien IT • Direction des Systèmes d'Information</div>
           <div class="org-row">
-            <div class="org-card alt" data-level="4"><strong>Danis Gouedart</strong><br>Alternant Systèmes & Réseaux</div>
+            <div class="org-card alt me" data-level="4"><strong>Danis Gouedart</strong><br>Alternant Systèmes & Réseaux</div>
             <div class="org-card alt" data-level="4"><strong>Raphaël Lobo</strong><br>Alternant Systèmes & Réseaux</div>
           </div>
         </div>
@@ -582,6 +632,11 @@
           <li>
             <a href="docs/tableau_synthese.xlsx" download target="_blank">Télécharger le tableau de synthèse (Excel)</a>
             <!-- COLLER ICI TON LIEN ONEDRIVE DU TABLEAU -->
+            <a href="https://cerfal-my.sharepoint.com/:x:/r/personal/d_gouedart_cfacampusmontsouris_fr/Documents/6-%20Annexe%206-1%20-%20Tableau%20de%20synth%C3%A8se%20-%20Epreuve%20E4%20-%20BTS%20SIO%202023(1)%201%20(1)%201%20(1).xlsx?d=w7e17be3aaae74b8ab48284ea5029cac5&csf=1&web=1&e=VvcYLb"
+               target="_blank"
+               style="display:block;margin-top:6px;font-weight:600;">
+              Ouvrir le tableau de synthèse en ligne (OneDrive)
+            </a>
           </li>
         </ul>
       </div>
@@ -590,41 +645,27 @@
     <section id="epreuveE5_formation" aria-labelledby="e5f-title">
       <h2 id="e5f-title">Missions réalisées en formation</h2>
       <div class="mission-section">
-        <!-- Liens Word (locaux) + commentaires OneDrive -->
-        <a href="docs/mission_wifi_bluetooth.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Découverte et présentation des réseaux sans-fil wifi/bluetooth</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
 
-        <a href="docs/mission_icmp_arp.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Protocole ICMP/ARP</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
+        <a href="https://1drv.ms/b/c/3c089fa1bf123036/EfG95I9G5L5Jn8XApEhicGYBrEdwdzm9DXMFw1PshJVRCw?e=5zoAZj" class="mission-card tap-bump" download target="_blank">
+          <span>Découverte et présentation des réseaux sans-fil Wi-Fi / Bluetooth</span>
+        </a>
 
-        <a href="docs/mission_gestionnaire_disques.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Gestionnaire de disques</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
+        <a href="https://1drv.ms/b/c/3c089fa1bf123036/EZR4RKk8IDBOqDHdPqVyZ2cBMVhIKTpKDyD1MzVyZghdIg?e=EOxzDG" class="mission-card tap-bump" download target="_blank">
+          <span>Étude et mise en œuvre des protocoles ICMP et ARP</span>
+        </a>
 
-        <a href="docs/mission_configuration_dhcp.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Confiuration DHCP</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
+        <a href="https://1drv.ms/b/c/3c089fa1bf123036/EY0wE__G1OhHgSoX9Ltlj6EB6zWTWlFKW59fFj-mjgJMqg?e=2kmfk2" class="mission-card tap-bump" download target="_blank">
+          <span>Utilisation du gestionnaire de disques et gestion du stockage</span>
+        </a>
 
-        <a href="docs/mission_atelier_acl.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Atelier ACL</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
+        <a href="https://1drv.ms/b/c/3c089fa1bf123036/EazYhrlDWl1Em2q3jOfe4cMBdv2vcjaJQcFyEV98CFQKvA?e=CHQnsL" class="mission-card tap-bump" download target="_blank">
+          <span>Configuration complète d’un service DHCP</span>
+        </a>
 
-        <a href="docs/mission_installation_debian_serveur_web.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Installation Debian et serveur WEB</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
+        <a href="https://1drv.ms/b/c/3c089fa1bf123036/EWdNOEIPFNpAny8AYoeDMSwB1wfYldF-HQ74J3SocaFoKg?e=QNmhFq" class="mission-card tap-bump" download target="_blank">
+          <span>Mise en place et tests d’un atelier ACL (contrôle d’accès)</span>
+        </a>
 
-        <a href="docs/mission_deploiement_portfolio.docx" class="mission-card tap-bump" download target="_blank">
-          <img src="icons/word.png" alt="Icone Word" loading="lazy"/>
-          <span>Déploiement d'un site internet (Portfolio)</span>
-        </a><!-- COLLER ICI TON LIEN ONEDRIVE -->
       </div>
     </section>
 
@@ -690,23 +731,46 @@
 
     <section id="veille" aria-labelledby="veille-title">
       <h2 id="veille-title">Veille technologique</h2>
-      <p>Je consacre ma veille à la <strong>cybersécurité</strong> et à l’<strong>intelligence artificielle</strong>. Je consulte régulièrement :</p>
+      <p>
+        Ma veille porte sur le thème&nbsp;:
+        <strong>les outils de cybersécurité face aux menaces de l’intelligence artificielle</strong>.
+        L’IA est utilisée à la fois par les défenseurs et par les attaquants (phishing avancé, deepfakes, automatisation des scans de failles, etc.).
+      </p>
+      <h3>Outils de défense assistés par l’IA :</h3>
       <ul>
-        <li><a href="https://www.cert.ssi.gouv.fr/" target="_blank">ANSSI – Agence nationale de la sécurité des systèmes d’information</a></li>
-        <li><a href="https://www.csoonline.com/category/security/" target="_blank">CSO Online – Sécurité informatique et tendances</a></li>
-        <li><a href="https://www.coursera.org/learn/cyber-security" target="_blank">MOOC Coursera : Cybersecurity Fundamentals</a></li>
-        <li><a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">MOOC Coursera : AI for Everyone</a></li>
-        <li><a href="https://www.ibm.com/topics/cybersecurity" target="_blank">IBM Security – Guides et ressources</a></li>
-        <li><a href="https://www.nist.gov/cyberframework" target="_blank">NIST Cybersecurity Framework</a></li>
+        <li>
+          <strong>EDR / XDR (Endpoint / Extended Detection &amp; Response)</strong> :
+          agents installés sur les postes et serveurs qui analysent en continu les comportements (processus, accès mémoire, réseau) pour bloquer automatiquement les ransomwares, chevaux de Troie ou scripts malveillants.
+        </li>
+        <li>
+          <strong>SIEM et plateformes d’analyse de logs</strong> :
+          centralisation des journaux (pare-feu, AD, VPN, applications) et corrélation par IA pour détecter des signaux faibles (connexion anormale, élévation de privilèges, comportements inhabituels).
+        </li>
+        <li>
+          <strong>Passerelles e-mail sécurisées et filtres anti-phishing</strong> :
+          analyse sémantique des messages, détection de clones de sites, vérification des pièces jointes en sandbox pour bloquer les campagnes de phishing générées par IA.
+        </li>
+        <li>
+          <strong>Outils de supervision réseau “NDR”</strong> :
+          inspection du trafic réseau pour repérer des flux suspects (exfiltration de données, C2, scans automatisés) grâce à des modèles d’IA entraînés sur le trafic « normal » de l’organisation.
+        </li>
+        <li>
+          <strong>Solutions de gestion des identités et MFA adaptatif</strong> :
+          authentification multifactorielle qui adapte le niveau de contrôle en fonction du risque (pays, appareil, heure inhabituelle, historique de l’utilisateur).
+        </li>
       </ul>
-      <p>J’analyse les tendances, nouvelles menaces et techniques de défense, notamment :</p>
+      <h3>Ressources pour approfondir :</h3>
       <ul>
-        <li>Protection des infrastructures réseau contre les attaques DDoS, ransomware, phishing.</li>
-        <li>Utilisation de l’IA pour la détection des anomalies et la prédiction des menaces.</li>
-        <li>Automatisation des audits de sécurité et des tests de pénétration.</li>
-        <li>Veille sur la réglementation RGPD et ISO 27001.</li>
+        <li><a href="https://www.cert.ssi.gouv.fr/" target="_blank">ANSSI – Bulletins d’alerte et recommandations sur les menaces émergentes</a></li>
+        <li><a href="https://learn.microsoft.com/fr-fr/security/" target="_blank">Microsoft Security – Documentation sur Defender, XDR et sécurité basée sur l’IA</a></li>
+        <li><a href="https://www.cisco.com/c/fr_fr/solutions/security.html" target="_blank">Cisco Security – Présentation des solutions de sécurité réseau et NDR</a></li>
+        <li><a href="https://www.crowdstrike.com/cybersecurity-101/" target="_blank">CrowdStrike – Ressources pédagogiques sur l’EDR/XDR et les attaques modernes</a></li>
+        <li><a href="https://www.ibm.com/topics/cybersecurity" target="_blank">IBM – Articles sur l’usage de l’IA dans la cybersécurité</a></li>
       </ul>
-      <p>Je compile cette veille dans des rapports mensuels et guides pratiques pour améliorer la sécurité des systèmes que j’administre.</p>
+      <p>
+        Je réalise une synthèse régulière de ces sources pour suivre l’évolution des attaques utilisant l’IA
+        et les réponses possibles (durcissement des postes, politique de mots de passe, MFA, segmentation réseau, formation des utilisateurs).
+      </p>
     </section>
   </main>
 
@@ -892,7 +956,7 @@
     // ========= Thème sombre/clair (clair par défaut) + click audio =========
     const toggle = document.getElementById('theme-toggle');
     const thumb = toggle.querySelector('.thumb');
-    const storedTheme = localStorage.getItem('theme');
+    theStoredTheme = localStorage.getItem('theme');
     const applyTheme = (t) => {
       document.body.dataset.theme = t;
       localStorage.setItem('theme', t);
@@ -900,7 +964,7 @@
       document.body.style.filter = 'opacity(.98)';
       setTimeout(()=>document.body.style.filter = '', 200);
     };
-    applyTheme(storedTheme === 'dark' ? 'dark' : 'light');
+    applyTheme(theStoredTheme === 'dark' ? 'dark' : 'light');
 
     toggle.addEventListener('click', () => {
       const next = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
