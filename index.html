@@ -503,7 +503,9 @@
         transform: translateY(-2px);
       }
       iframe,
-      img {
+      img,
+      object,
+      embed {
         max-width: 100%;
         height: auto;
         border-radius: 12px;
@@ -669,7 +671,7 @@
         padding: 1.2rem 1.5rem;
         border-radius: 16px;
         margin-top: 1.2rem;
-        box-shadow: 0 6px 20px rgba(0, 0,  0, 0.12);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         transition: transform 0.3s, box-shadow 0.3s;
         backdrop-filter: blur(8px) saturate(130%);
         border: 1px solid rgba(255, 255, 255, 0.6);
@@ -1006,6 +1008,63 @@
         border-color: rgba(255, 255, 255, 0.08);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
       }
+
+      /* ===== Veille : disposition légère ===== */
+      .veille-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .veille-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 900px) {
+        .veille-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== Certifications : grille ===== */
+      .cert-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      @media (max-width: 900px) {
+        .cert-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .cert-title {
+        margin: 0 0 0.6rem 0;
+      }
+      .cert-preview {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        background: rgba(255, 255, 255, 0.55);
+      }
+      body[data-theme="dark"] .cert-preview {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+        background: rgba(15, 23, 42, 0.35);
+      }
+      .cert-preview object {
+        width: 100%;
+        height: 520px;
+        border: none;
+        border-radius: 12px;
+      }
+      .cert-preview img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
     </style>
   </head>
 
@@ -1126,12 +1185,12 @@
             </li>
             <li>
               <a href="#" data-target="epreuveE5_formation"
-                >Missions formation</a
+                >Missions réalisées en formation</a
               >
             </li>
             <li>
               <a href="#" data-target="epreuveE5_entreprise"
-                >Missions entreprise</a
+                >Missions réalisées en entreprise</a
               >
             </li>
             <li>
@@ -1204,10 +1263,10 @@
               >Tableau de synthèse</a
             >
             <a href="#" data-target="epreuveE5_formation"
-              >Missions formation</a
+              >Missions réalisées en formation</a
             >
             <a href="#" data-target="epreuveE5_entreprise"
-              >Missions entreprise</a
+              >Missions réalisées en entreprise</a
             >
           </div>
         </div>
@@ -1555,7 +1614,9 @@
             download
             target="_blank"
           >
-            <span>Utilisation du gestionnaire de disques et gestion du stockage</span>
+            <span
+              >Utilisation du gestionnaire de disques et gestion du stockage</span
+            >
           </a>
 
           <a
@@ -1573,7 +1634,9 @@
             download
             target="_blank"
           >
-            <span>Mise en place et tests d’un atelier ACL (contrôle d’accès)</span>
+            <span
+              >Mise en place et tests d’un atelier ACL (contrôle d’accès)</span
+            >
           </a>
 
           <!-- AJOUT mission formation 6 (GLPI) -->
@@ -1583,7 +1646,10 @@
             download
             target="_blank"
           >
-            <span>Mise en place d’un serveur GLPI (outil de ticketing et gestion de parc)</span>
+            <span
+              >Mise en place d’un serveur GLPI (outil de ticketing et gestion de
+              parc)</span
+            >
           </a>
         </div>
       </section>
@@ -1685,20 +1751,41 @@
 
       <section id="epreuveE5_certifications" aria-labelledby="e5c-title">
         <h2 id="e5c-title">Certifications obtenues</h2>
-        <ul>
-          <li>
+
+        <div class="cert-grid">
+          <div class="card">
+            <h3 class="cert-title">CNIL – MOOC RGPD (Attestation)</h3>
             <a
               href="https://1drv.ms/i/c/3c089fa1bf123036/IQDbnbQJXXB2TbqGTsG2wY5AAbf2_gea5ppv2eg5dw--8VQ?e=M6DhZi"
               target="_blank"
+              rel="noopener"
+              class="cert-preview"
+              aria-label="Ouvrir la certification CNIL – MOOC RGPD"
             >
               <img
                 src="Certifica_RGPD.png"
-                alt="Certification RGPD"
+                alt="Certification CNIL – MOOC RGPD"
                 loading="lazy"
               />
             </a>
-          </li>
-        </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="cert-title">
+              CNIL – MOOC RGPD : Module 2 – Les principes de la protection des
+              données
+            </h3>
+
+            <!-- ✅ MODIFICATION UNIQUE : on affiche l'image (Module 2) à la place du PDF -->
+            <div class="cert-preview" aria-label="Aperçu image Module 2">
+              <img
+                src="Attestation_de_suivi_page-0001.png"
+                alt="Attestation CNIL – Module 2 – Les principes de la protection des données"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="epreuveE6_situation" aria-labelledby="e6s-title">
@@ -1720,94 +1807,76 @@
       <section id="veille" aria-labelledby="veille-title">
         <h2 id="veille-title">Veille technologique</h2>
 
-        <p>
-          Ma veille porte sur le thème&nbsp;:
-          <strong
-            >les outils de cybersécurité face aux menaces de l’intelligence
-            artificielle</strong
-          >. L’IA est utilisée à la fois par les défenseurs et par les attaquants
-          (phishing avancé, deepfakes, automatisation des scans de failles,
-          etc.).
-        </p>
+        <div class="veille-wrap">
+          <div class="card">
+            <p>
+              Thème : <strong>cybersécurité &amp; IA</strong> — comprendre comment
+              l’IA renforce les attaques (phishing, deepfakes, automatisation)
+              et comment les outils de défense s’adaptent.
+            </p>
+          </div>
 
-        <h3>Outils de défense assistés par l’IA :</h3>
-        <ul>
-          <li>
-            <strong>EDR / XDR (Endpoint / Extended Detection &amp; Response)</strong>
-            : agents installés sur les postes et serveurs qui analysent en
-            continu les comportements (processus, accès mémoire, réseau) pour
-            bloquer automatiquement les ransomwares, chevaux de Troie ou scripts
-            malveillants.
-          </li>
-          <li>
-            <strong>SIEM et plateformes d’analyse de logs</strong> :
-            centralisation des journaux (pare-feu, AD, VPN, applications) et
-            corrélation par IA pour détecter des signaux faibles (connexion
-            anormale, élévation de privilèges, comportements inhabituels).
-          </li>
-          <li>
-            <strong>Passerelles e-mail sécurisées et filtres anti-phishing</strong>
-            : analyse sémantique des messages, détection de clones de sites,
-            vérification des pièces jointes en sandbox pour bloquer les
-            campagnes de phishing générées par IA.
-          </li>
-          <li>
-            <strong>Outils de supervision réseau “NDR”</strong> : inspection du
-            trafic réseau pour repérer des flux suspects (exfiltration de
-            données, C2, scans automatisés) grâce à des modèles d’IA entraînés
-            sur le trafic « normal » de l’organisation.
-          </li>
-          <li>
-            <strong>Solutions de gestion des identités et MFA adaptatif</strong>
-            : authentification multifactorielle qui adapte le niveau de contrôle
-            en fonction du risque (pays, appareil, heure inhabituelle,
-            historique de l’utilisateur).
-          </li>
-        </ul>
+          <div class="veille-grid">
+            <div class="card">
+              <h3>Axes suivis</h3>
+              <ul>
+                <li><strong>Détection</strong> : EDR/XDR, NDR.</li>
+                <li><strong>Analyse</strong> : SIEM &amp; corrélation de logs.</li>
+                <li><strong>Protection</strong> : anti-phishing / e-mail gateway.</li>
+                <li><strong>Accès</strong> : MFA adaptatif, IAM.</li>
+              </ul>
+            </div>
 
-        <h3>Ressources pour approfondir :</h3>
-        <ul>
-          <li>
-            <a href="https://www.cert.ssi.gouv.fr/" target="_blank"
-              >ANSSI – Bulletins d’alerte et recommandations sur les menaces
-              émergentes</a
-            >
-          </li>
-          <li>
-            <a href="https://learn.microsoft.com/fr-fr/security/" target="_blank"
-              >Microsoft Security – Documentation sur Defender, XDR et sécurité
-              basée sur l’IA</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.cisco.com/c/fr_fr/solutions/security.html"
-              target="_blank"
-              >Cisco Security – Présentation des solutions de sécurité réseau et
-              NDR</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.crowdstrike.com/cybersecurity-101/"
-              target="_blank"
-              >CrowdStrike – Ressources pédagogiques sur l’EDR/XDR et les attaques
-              modernes</a
-            >
-          </li>
-          <li>
-            <a href="https://www.ibm.com/topics/cybersecurity" target="_blank"
-              >IBM – Articles sur l’usage de l’IA dans la cybersécurité</a
-            >
-          </li>
-        </ul>
+            <div class="card">
+              <h3>Sources</h3>
+              <ul>
+                <li>
+                  <a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener"
+                    >ANSSI (CERT-FR)</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://learn.microsoft.com/fr-fr/security/"
+                    target="_blank"
+                    rel="noopener"
+                    >Microsoft Security</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.cisco.com/c/fr_fr/solutions/security.html"
+                    target="_blank"
+                    rel="noopener"
+                    >Cisco Security</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.crowdstrike.com/cybersecurity-101/"
+                    target="_blank"
+                    rel="noopener"
+                    >CrowdStrike (ressources)</a
+                  >
+                </li>
+                <li>
+                  <a href="https://www.ibm.com/topics/cybersecurity" target="_blank" rel="noopener"
+                    >IBM (articles)</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        <p>
-          Je réalise une synthèse régulière de ces sources pour suivre
-          l’évolution des attaques utilisant l’IA et les réponses possibles
-          (durcissement des postes, politique de mots de passe, MFA, segmentation
-          réseau, formation des utilisateurs).
-        </p>
+          <div class="card">
+            <h3>Organisation</h3>
+            <ul>
+              <li>Lecture régulière + sélection des infos utiles.</li>
+              <li>Notes courtes : menace → impact → mesure de sécurité.</li>
+              <li>Synthèse : durcissement, MFA, segmentation, sensibilisation.</li>
+            </ul>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -1815,10 +1884,16 @@
     <button id="backToTop" aria-label="Revenir en haut">↑</button>
 
     <!-- Barre Jury flottante -->
-    <div id="jury-controls" role="toolbar" aria-label="Contrôles présentation jury">
+    <div
+      id="jury-controls"
+      role="toolbar"
+      aria-label="Contrôles présentation jury"
+    >
       <button id="jury-prev" title="Section précédente">⬅️</button>
       <button id="jury-next" title="Section suivante">➡️</button>
-      <button id="jury-quit" class="quit" title="Quitter la présentation">❌</button>
+      <button id="jury-quit" class="quit" title="Quitter la présentation">
+        ❌
+      </button>
     </div>
 
     <footer
@@ -1882,8 +1957,8 @@
 
         function resize() {
           DPR = Math.min(window.devicePixelRatio || 1, 2);
-          w = c.width = innerWidth * DPR;
-          h = c.height = innerHeight * DPR;
+          w = (c.width = innerWidth * DPR);
+          h = (c.height = innerHeight * DPR);
           c.style.width = innerWidth + "px";
           c.style.height = innerHeight + "px";
           initGraph();
