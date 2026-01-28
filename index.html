@@ -725,6 +725,16 @@
       .mission-card span {
         font-weight: 600;
       }
+
+      /* AJOUT : affichage discret du code ME-A?-0? sous le titre */
+      .mission-card small {
+        display: block;
+        font-size: 0.75rem;
+        opacity: 0.75;
+        margin-top: 2px;
+        font-weight: 400;
+      }
+
       .mission-card .ripple {
         background: rgba(255, 255, 255, 0.45);
       }
@@ -1307,7 +1317,10 @@
             <li>
               Administration système (Windows Server 2022, Active Directory)
             </li>
-            <li>Administration Microsoft 365 (utilisateurs, boîtes mail, groupes, etc.)</li>
+            <li>
+              Administration Microsoft 365 (utilisateurs, boîtes mail, groupes,
+              etc.)
+            </li>
             <li>Réseaux et configuration DHCP, DNS, routage</li>
             <li>Sécurité informatique (pare-feu, sauvegarde, audit)</li>
             <li>Virtualisation (VirtualBox, Proxmox, VMware)</li>
@@ -1370,8 +1383,8 @@
             charge des incidents, demandes de services, installation de
             logiciels, assistance à distance et accompagnement au quotidien.
             <em
-              >Outils : suite Microsoft 365, prise en main à distance (AnyDesk), messagerie Outlook,
-              téléphone IP.</em
+              >Outils : suite Microsoft 365, prise en main à distance (AnyDesk),
+              messagerie Outlook, téléphone IP.</em
             >
           </li>
           <li>
@@ -1379,9 +1392,9 @@
             des postes, imprimantes, smartphones, tablettes, écrans et
             périphériques, gestion des licences logicielles et renouvellements.
             <em
-              >Outils : application Power Apps (gestion de parc), Microsoft Entra ID, Active Directory,
-              tableurs de suivi, outils de déploiement d’images (WDS/MDT,
-              Clonezilla), outils de télédistribution.</em
+              >Outils : application Power Apps (gestion de parc), Microsoft Entra
+              ID, Active Directory, tableurs de suivi, outils de déploiement
+              d’images (WDS/MDT, Clonezilla), outils de télédistribution.</em
             >
           </li>
           <li>
@@ -1399,9 +1412,9 @@
             commutateurs, routeurs et bornes Wi-Fi, gestion des VLAN, supervision
             de la connectivité entre les sites et des liaisons Internet.
             <em
-              >Outils : consoles d’administration des équipements réseau
-              (Extreme Networks), Wireshark, outils de supervision réseau
-              (Centreon, PRTG, Zabbix), portails Wi-Fi.</em
+              >Outils : consoles d’administration des équipements réseau (Extreme
+              Networks), Wireshark, outils de supervision réseau (Centreon, PRTG,
+              Zabbix), portails Wi-Fi.</em
             >
           </li>
           <li>
@@ -1418,9 +1431,7 @@
             <strong>Sauvegarde, continuité d’activité et restauration :</strong>
             planification des sauvegardes des serveurs et données critiques,
             tests de restauration, suivi de la capacité de stockage.
-            <em
-              >Outils : NAS.</em
-            >
+            <em>Outils : NAS.</em>
           </li>
           <li>
             <strong>Projets d’infrastructure et évolution du SI :</strong>
@@ -1660,10 +1671,11 @@
             rel="noopener"
             title="Installation et configuration de matériel informatique (PC, imprimante, écrans)"
           >
-            <span
-              >Installation et configuration de matériel informatique (PC,
-              imprimantes, écrans)</span
-            >
+            <span>
+              Installation et configuration de matériel informatique (PC,
+              imprimantes, écrans)
+              <small>ME-A2-01</small>
+            </span>
           </a>
 
           <a
@@ -1674,7 +1686,10 @@
             rel="noopener"
             title="Gestion des comptes utilisateurs (Active Directory)"
           >
-            <span>Gestion des comptes utilisateurs dans Active Directory</span>
+            <span>
+              Gestion des comptes utilisateurs dans Active Directory
+              <small>ME-A2-02</small>
+            </span>
           </a>
 
           <a
@@ -1685,10 +1700,11 @@
             rel="noopener"
             title="Formation des utilisateurs aux outils (OneDrive, KeePass, interface entreprise)"
           >
-            <span
-              >Formation des utilisateurs aux outils informatiques (OneDrive,
-              KeePass, outils internes)</span
-            >
+            <span>
+              Formation des utilisateurs aux outils informatiques (OneDrive,
+              KeePass, outils internes)
+              <small>ME-A2-03</small>
+            </span>
           </a>
 
           <a
@@ -1699,7 +1715,10 @@
             rel="noopener"
             title="Gestion du parc informatique (inventaire, suivi, licences)"
           >
-            <span>Gestion du parc informatique et des licences logicielles</span>
+            <span>
+              Gestion du parc informatique et des licences logicielles
+              <small>ME-A2-04</small>
+            </span>
           </a>
 
           <a
@@ -1710,10 +1729,11 @@
             rel="noopener"
             title="Rédaction d’une procédure pour les utilisateurs en télétravail et en mobilité"
           >
-            <span
-              >Rédaction de procédures pour les utilisateurs en télétravail et en
-              mobilité</span
-            >
+            <span>
+              Rédaction de procédures pour les utilisateurs en télétravail et en
+              mobilité
+              <small>ME-A2-05</small>
+            </span>
           </a>
 
           <a
@@ -1724,22 +1744,45 @@
             rel="noopener"
             title="Résolution d’un problème de réseau général"
           >
-            <span>Résolution d’incidents réseau et support informatique</span>
+            <span>
+              Résolution d’incidents réseau et support informatique
+              <small>ME-A2-06</small>
+            </span>
           </a>
 
+          <!-- AJOUT (AVEC LIEN) -->
           <a
-            href="https://cerfal-my.sharepoint.com/:w:/r/personal/d_gouedart_cfacampusmontsouris_fr/Documents/entreprise%207.docx?d=w6a742abe7a8749189517d0c93e1d8b12&csf=1&web=1&e=uvwFC7"
+            href="https://1drv.ms/w/c/3c089fa1bf123036/IQDlQ208AMXPSq_TfIDK29DrAUVukWj8W97WvtA3FijEO30?e=QZU0Ou"
             class="mission-card tap-bump"
-            download
             target="_blank"
             rel="noopener"
-            title="Backup sur serveur de comptabilité"
+            title="Intégration et configuration d’outils de téléphonie mobile (iOS / Android)"
           >
-            <span
-              >Mise en place et vérification de sauvegardes sur serveur de
-              comptabilité</span
-            >
+            <span>
+              Intégration et configuration d’outils de téléphonie mobile (iOS /
+              Android)
+              <small>ME-A2-07</small>
+            </span>
           </a>
+
+          <!-- AJOUT (SANS LIEN) -->
+          <div class="mission-card">
+            <span>
+              Participation active aux instances de pilotage Microsoft pour
+              l’optimisation continue de l’environnement
+              <small>ME-A2-08</small>
+            </span>
+          </div>
+
+          <!-- AJOUT (SANS LIEN) -->
+          <div class="mission-card">
+            <span>
+              Vérification des droits d’accès sur un serveur de fichiers<br />
+              Contrôle de l’appartenance des utilisateurs aux groupes Active
+              Directory
+              <small>ME-A2-09</small>
+            </span>
+          </div>
         </div>
       </section>
 
@@ -1816,7 +1859,9 @@
               <ul>
                 <li><strong>Détection</strong> : EDR/XDR, NDR.</li>
                 <li><strong>Analyse</strong> : SIEM &amp; corrélation de logs.</li>
-                <li><strong>Protection</strong> : anti-phishing / e-mail gateway.</li>
+                <li>
+                  <strong>Protection</strong> : anti-phishing / e-mail gateway.
+                </li>
                 <li><strong>Accès</strong> : MFA adaptatif, IAM.</li>
               </ul>
             </div>
@@ -1825,7 +1870,10 @@
               <h3>Sources</h3>
               <ul>
                 <li>
-                  <a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener"
+                  <a
+                    href="https://www.cert.ssi.gouv.fr/"
+                    target="_blank"
+                    rel="noopener"
                     >ANSSI (CERT-FR)</a
                   >
                 </li>
@@ -1854,7 +1902,10 @@
                   >
                 </li>
                 <li>
-                  <a href="https://www.ibm.com/topics/cybersecurity" target="_blank" rel="noopener"
+                  <a
+                    href="https://www.ibm.com/topics/cybersecurity"
+                    target="_blank"
+                    rel="noopener"
                     >IBM (articles)</a
                   >
                 </li>
