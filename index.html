@@ -48,38 +48,16 @@
       body {
         font-family: "Inter", sans-serif;
 
-        /* Fond dégradé doux + variables de parallaxe */
+        /* Fond dégradé doux */
         --grad1: #f0f4f8;
         --grad2: #e6eef7;
         --grad3: #ffffff;
         --grad4: #eef6ff;
-        --parallaxX: 0%;
-        --parallaxY: 0%;
 
-        background: radial-gradient(
-            1200px 800px at calc(10% + var(--parallaxX))
-              calc(20% + var(--parallaxY)),
-            var(--grad1),
-            transparent 60%
-          ),
-          radial-gradient(
-            1000px 900px at calc(90% - var(--parallaxX))
-              calc(10% + var(--parallaxY)),
-            var(--grad2),
-            transparent 60%
-          ),
-          radial-gradient(
-            900px 700px at calc(20% + var(--parallaxX))
-              calc(90% - var(--parallaxY)),
-            var(--grad4),
-            transparent 60%
-          ),
-          linear-gradient(
-            135deg,
-            var(--grad1),
-            var(--grad2) 40%,
-            var(--grad3) 100%
-          );
+        background: radial-gradient(1200px 800px at 10% 20%, var(--grad1), transparent 60%),
+          radial-gradient(1000px 900px at 90% 10%, var(--grad2), transparent 60%),
+          radial-gradient(900px 700px at 20% 90%, var(--grad4), transparent 60%),
+          linear-gradient(135deg, var(--grad1), var(--grad2) 40%, var(--grad3) 100%);
         background-size: 140% 140%, 140% 140%, 140% 140%, 100% 100%;
         animation: bgShift 35s ease-in-out infinite alternate;
 
@@ -104,15 +82,6 @@
         }
       }
 
-      /* =========================== CANVAS RESEAU (derrière tout) =========================== */
-      #bg-network {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0.75;
-      }
-
       /* =========================== INTRO ÉCRAN =========================== */
       #intro-screen {
         position: fixed;
@@ -125,8 +94,7 @@
         background: inherit;
         flex-direction: column;
         gap: 0.75rem;
-        transition: opacity 0.8s ease, transform 0.8s ease,
-          visibility 0.8s ease;
+        transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
       }
       #intro-screen.intro-hidden {
         opacity: 0;
@@ -155,8 +123,7 @@
         color: transparent;
         filter: drop-shadow(0 6px 18px rgba(37, 99, 235, 0.25));
         background-size: 200% auto;
-        animation: shine 1.2s ease-in-out infinite alternate,
-          introPop 0.6s ease-out both;
+        animation: shine 1.2s ease-in-out infinite alternate, introPop 0.6s ease-out both;
         text-align: center;
         padding: 0 0.3em;
       }
@@ -293,22 +260,6 @@
       nav > ul > li > a.active-link {
         outline: 2px solid rgba(96, 165, 250, 0.7);
         background: rgba(59, 130, 246, 0.25);
-      }
-
-      /* Ripple DISCRET (nouvelle taille/durée) */
-      .ripple {
-        position: absolute;
-        border-radius: 50%;
-        transform: scale(0);
-        pointer-events: none;
-        background: rgba(255, 255, 255, 0.45);
-        animation: ripple 0.45s linear;
-      }
-      @keyframes ripple {
-        to {
-          transform: scale(3.5);
-          opacity: 0;
-        }
       }
       .tap-bump:active {
         transform: translateY(0) scale(0.98);
@@ -621,7 +572,6 @@
         }
       }
 
-      /* Nom de Danis en couleur différente */
       .org-card.me strong {
         color: #facc15;
         text-shadow: 0 0 6px rgba(250, 204, 21, 0.6);
@@ -714,29 +664,15 @@
         background: linear-gradient(135deg, #60a5fa, #3b82f6);
         color: #fff;
       }
-      .mission-card img {
-        width: 42px;
-        height: 42px;
-        transition: transform 0.3s;
-      }
-      .mission-card:hover img {
-        transform: scale(1.1);
-      }
       .mission-card span {
         font-weight: 600;
       }
-
-      /* AJOUT : affichage discret du code ME-A?-0? sous le titre */
       .mission-card small {
         display: block;
         font-size: 0.75rem;
         opacity: 0.75;
         margin-top: 2px;
         font-weight: 400;
-      }
-
-      .mission-card .ripple {
-        background: rgba(255, 255, 255, 0.45);
       }
 
       /* =========================== ACCUEIL =========================== */
@@ -896,7 +832,6 @@
         #backToTop,
         .progress-bar,
         #intro-screen,
-        #bg-network,
         .actions,
         #jury-controls {
           display: none !important;
@@ -1079,15 +1014,8 @@
   </head>
 
   <body>
-    <!-- CANVAS RÉSEAU -->
-    <canvas id="bg-network" aria-hidden="true"></canvas>
-
-    <!-- Barre de progression -->
-    <div class="progress-bar" id="progress"></div>
-
     <!-- INTRO SCREEN -->
     <div id="intro-screen" aria-hidden="true">
-      <!-- Logo DG bleu électrique -->
       <svg id="intro-logo" viewBox="0 0 128 128" aria-hidden="true">
         <defs>
           <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
@@ -1128,17 +1056,11 @@
       </div>
     </div>
 
-    <!-- Son whoosh simple (hébergé) -->
-    <audio id="intro-sound" preload="auto">
-      <source
-        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b71e3d6e2.mp3?filename=soft-transition-whoosh-1-20360.mp3"
-        type="audio/mpeg"
-      />
-    </audio>
+    <!-- Barre de progression -->
+    <div class="progress-bar" id="progress"></div>
 
     <header>
       <div class="logo-wrap" aria-hidden="true">
-        <!-- Logo header -->
         <svg width="40" height="40" viewBox="0 0 128 128">
           <defs>
             <linearGradient id="lg2" x1="0" x2="1">
@@ -1393,8 +1315,7 @@
             périphériques, gestion des licences logicielles et renouvellements.
             <em
               >Outils : application Power Apps (gestion de parc), Microsoft Entra
-              ID, Active Directory, tableurs de suivi, outils de déploiement
-              d’images (WDS/MDT, Clonezilla), outils de télédistribution.</em
+              ID, Active Directory, tableurs de suivi.</em
             >
           </li>
           <li>
@@ -1413,8 +1334,8 @@
             de la connectivité entre les sites et des liaisons Internet.
             <em
               >Outils : consoles d’administration des équipements réseau (Extreme
-              Networks), Wireshark, outils de supervision réseau (Centreon, PRTG,
-              Zabbix), portails Wi-Fi.</em
+              Networks), Wireshark, outils de supervision réseau (Zabbix),
+              portails Wi-Fi.</em
             >
           </li>
           <li>
@@ -1439,10 +1360,8 @@
             migration de fichiers, intégration d’applications métiers),
             documentation et procédures.
             <em
-              >Outils : plateformes de virtualisation (Hyper-V, VMware,
-              VirtualBox), outils de gestion de projet (Planner, Trello, Jira),
-              suites bureautiques, éditeurs de documentation (Word, Visio,
-              Draw.io).</em
+              >Outils : plateformes de virtualisation (VMware), suites bureautiques,
+              éditeurs de documentation (Word, Draw.io).</em
             >
           </li>
           <li>
@@ -1452,13 +1371,11 @@
             des VPN.
             <em
               >Outils : présentations PowerPoint, supports PDF, intranet
-              d’entreprise, plateformes de e-learning, outils de webconférence
-              (Teams, Zoom).</em
+              d’entreprise, Teams.</em
             >
           </li>
         </ul>
 
-        <!-- Organigramme mis à jour -->
         <div class="organigramme" aria-hidden="false">
           <div class="org-level">
             <div class="org-card" data-level="1">
@@ -1505,7 +1422,6 @@
           </div>
         </div>
 
-        <!-- Localisation (carte claire) -->
         <div class="map-wrap">
           <div class="map-title">Localisation — Comédie-Française (carte)</div>
           <div
@@ -1571,7 +1487,6 @@
           </tr>
         </table>
 
-        <!-- Lien Excel du tableau de synthèse -->
         <div class="downloads">
           <h4>📎 Téléchargements</h4>
           <ul>
@@ -1588,7 +1503,6 @@
         </div>
       </section>
 
-      <!-- ===================== MODIFIÉ : FORMATION ===================== -->
       <section id="epreuveE5_formation" aria-labelledby="e5f-title">
         <h2 id="e5f-title">Missions réalisées en formation</h2>
 
@@ -1653,7 +1567,6 @@
             </span>
           </a>
 
-          <!-- mission formation 6 (GLPI) -->
           <a
             href="https://cerfal-my.sharepoint.com/:w:/r/personal/d_gouedart_cfacampusmontsouris_fr/Documents/mission%20formation%206.docx?d=w6996f59592164a9c81257823b778fa1d&csf=1&web=1&e=QtwEXM"
             class="mission-card tap-bump"
@@ -1667,7 +1580,6 @@
             </span>
           </a>
 
-          <!-- AJOUT : Installation serveur WEB -->
           <a
             href="https://1drv.ms/w/c/3c089fa1bf123036/IQDL3BtfwRJJT6iQ-XvC1BfpAQ1rW94Ml0p71XxFd2cAdxw?e=XmUTwv"
             class="mission-card tap-bump"
@@ -1680,7 +1592,6 @@
             </span>
           </a>
 
-          <!-- AJOUT : Déploiement site -->
           <a
             href="https://1drv.ms/w/c/3c089fa1bf123036/IQDqfAJ42VQmQa_Hko3dqmFyAfb5Ma3FogP-T7t-qURhyvA?e=RG384u"
             class="mission-card tap-bump"
@@ -1695,7 +1606,6 @@
         </div>
       </section>
 
-      <!-- ===================== MODIFIÉ : ENTREPRISE ===================== -->
       <section id="epreuveE5_entreprise" aria-labelledby="e5e-title">
         <h2 id="e5e-title">Missions réalisées en entreprise</h2>
 
@@ -1859,7 +1769,6 @@
               données
             </h3>
 
-            <!-- ✅ MODIFICATION UNIQUE : on affiche l'image (Module 2) à la place du PDF -->
             <div class="cert-preview" aria-label="Aperçu image Module 2">
               <img
                 src="Attestation_de_suivi_page-0001.png"
@@ -1905,9 +1814,7 @@
               <ul>
                 <li><strong>Détection</strong> : EDR/XDR, NDR.</li>
                 <li><strong>Analyse</strong> : SIEM &amp; corrélation de logs.</li>
-                <li>
-                  <strong>Protection</strong> : anti-phishing / e-mail gateway.
-                </li>
+                <li><strong>Protection</strong> : anti-phishing / e-mail gateway.</li>
                 <li><strong>Accès</strong> : MFA adaptatif, IAM.</li>
               </ul>
             </div>
@@ -1916,10 +1823,7 @@
               <h3>Sources</h3>
               <ul>
                 <li>
-                  <a
-                    href="https://www.cert.ssi.gouv.fr/"
-                    target="_blank"
-                    rel="noopener"
+                  <a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener"
                     >ANSSI (CERT-FR)</a
                   >
                 </li>
@@ -1971,10 +1875,8 @@
       </section>
     </main>
 
-    <!-- Bouton haut de page -->
     <button id="backToTop" aria-label="Revenir en haut">↑</button>
 
-    <!-- Barre Jury flottante -->
     <div
       id="jury-controls"
       role="toolbar"
@@ -2003,268 +1905,79 @@
     </footer>
 
     <script>
-      /* ====================== AUDIO CLICK (Web Audio) ====================== */
-      const AudioKit = (() => {
-        let ctx;
-        const getCtx = () =>
-          (ctx ||= new (window.AudioContext || window.webkitAudioContext)());
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-        function envGain(duration = 0.12, peak = 0.5) {
-          const a = getCtx();
-          const g = a.createGain();
-          const now = a.currentTime;
+      // ========= Navigation interne =========
+      const links = $$("a[data-target]");
+      const sections = $$("main section");
+      const navLinks = $$("nav a[data-target]");
 
-          g.gain.setValueAtTime(0.0001, now);
-          g.gain.exponentialRampToValueAtTime(peak, now + 0.02);
-          g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-
-          return g;
-        }
-
-        function playClick() {
-          try {
-            const a = getCtx();
-            const o = a.createOscillator();
-            const g = envGain(0.12, 0.45);
-
-            o.type = "square";
-            o.frequency.setValueAtTime(800, a.currentTime);
-            o.frequency.exponentialRampToValueAtTime(220, a.currentTime + 0.1);
-
-            o.connect(g).connect(a.destination);
-            o.start();
-            o.stop(a.currentTime + 0.12);
-          } catch (e) {}
-        }
-
-        return { playClick };
-      })();
-
-      // ========= Canvas Réseau (subtil, adaptatif au thème) =========
-      (function () {
-        const c = document.getElementById("bg-network");
-        const ctx = c.getContext("2d");
-        let w, h, DPR, nodes, links;
-
-        function resize() {
-          DPR = Math.min(window.devicePixelRatio || 1, 2);
-          w = (c.width = innerWidth * DPR);
-          h = (c.height = innerHeight * DPR);
-          c.style.width = innerWidth + "px";
-          c.style.height = innerHeight + "px";
-          initGraph();
-        }
-
-        function themeColors() {
-          const dark = document.body.dataset.theme === "dark";
-          return {
-            node: dark ? "rgba(56,132,255,0.85)" : "rgba(96,165,250,0.95)",
-            line: dark ? "rgba(37,99,235,0.22)" : "rgba(59,130,246,0.20)",
-            glow: dark ? "rgba(30,64,175,0.65)" : "rgba(96,165,250,0.55)",
-          };
-        }
-
-        function initGraph() {
-          const count = Math.round((innerWidth * innerHeight) / 22000);
-          nodes = [];
-
-          for (let i = 0; i < count; i++) {
-            nodes.push({
-              x: Math.random() * w,
-              y: Math.random() * h,
-              vx: (Math.random() - 0.5) * 0.18,
-              vy: (Math.random() - 0.5) * 0.18,
-              r: Math.random() * 2 + 1.2,
-            });
-          }
-
-          links = [];
-          for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-              const dx = nodes[i].x - nodes[j].x;
-              const dy = nodes[i].y - nodes[j].y;
-              const d2 = dx * dx + dy * dy;
-              const max = 180 * DPR;
-
-              if (d2 < max * max) {
-                links.push({ a: i, b: j, d: Math.sqrt(d2) });
-              }
-            }
-          }
-        }
-
-        function tick() {
-          const { node, line, glow } = themeColors();
-          ctx.clearRect(0, 0, w, h);
-          ctx.lineWidth = 1;
-
-          for (const L of links) {
-            const A = nodes[L.a],
-              B = nodes[L.b];
-            const dx = A.x - B.x,
-              dy = A.y - B.y;
-            const d = Math.hypot(dx, dy);
-            const alpha = Math.max(0, 1 - d / (180 * DPR));
-            if (alpha <= 0) continue;
-
-            ctx.strokeStyle =
-              line.replace(/[\d.]+\)$/, "") + alpha.toFixed(3) + ")";
-            ctx.beginPath();
-            ctx.moveTo(A.x, A.y);
-            ctx.lineTo(B.x, B.y);
-            ctx.stroke();
-          }
-
-          for (const p of nodes) {
-            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 10);
-            g.addColorStop(0, glow);
-            g.addColorStop(1, "rgba(0,0,0,0)");
-
-            ctx.fillStyle = g;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r * 10, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = node;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fill();
-
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < -20) p.x = w + 20;
-            if (p.x > w + 20) p.x = -20;
-            if (p.y < -20) p.y = h + 20;
-            if (p.y > h + 20) p.y = -20;
-          }
-
-          requestAnimationFrame(tick);
-        }
-
-        window.addEventListener("resize", resize, { passive: true });
-        const mo = new MutationObserver(resize);
-        mo.observe(document.body, {
-          attributes: true,
-          attributeFilter: ["data-theme"],
-        });
-
-        resize();
-        tick();
-      })();
-
-      // ========= Ripple effect (taille réduite) =========
-      function addRipple(e) {
-        const el = e.currentTarget;
-        const circle = document.createElement("span");
-        const rect = el.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-
-        circle.className = "ripple";
-        circle.style.width = circle.style.height = size * 0.6 + "px";
-        circle.style.left = e.clientX - rect.left - (size * 0.6) / 2 + "px";
-        circle.style.top = e.clientY - rect.top - (size * 0.6) / 2 + "px";
-
-        el.appendChild(circle);
-        circle.addEventListener("animationend", () => circle.remove());
+      function setActiveNav(id) {
+        navLinks.forEach((a) =>
+          a.classList.toggle("active-link", a.getAttribute("data-target") === id)
+        );
       }
-
-      // ========= Navigation interne + sauvegarde dernière section + transition =========
-      const links = document.querySelectorAll("a[data-target]");
-      const sections = document.querySelectorAll("main section");
-      const navLinks = document.querySelectorAll("nav a[data-target]");
 
       function activateSection(id) {
         sections.forEach((s) => s.classList.remove("active"));
 
-        const targetSection = document.getElementById(id);
-        if (targetSection) {
-          targetSection.classList.add("active");
-          targetSection.classList.add("transition-enter");
+        const target = document.getElementById(id);
+        if (!target) return;
 
-          requestAnimationFrame(() =>
-            targetSection.classList.add("transition-enter-active")
-          );
+        target.classList.add("active", "transition-enter");
+        requestAnimationFrame(() =>
+          target.classList.add("transition-enter-active")
+        );
+        setTimeout(() => {
+          target.classList.remove("transition-enter", "transition-enter-active");
+        }, 500);
 
-          setTimeout(
-            () =>
-              targetSection.classList.remove(
-                "transition-enter",
-                "transition-enter-active"
-              ),
-            500
-          );
+        const animated = target.querySelectorAll(".card, .mission-card, .org-card");
+        animated.forEach((el, i) => {
+          el.style.animation = "none";
+          void el.offsetWidth;
+          el.style.animation = `orgIn .6s ${0.06 * i}s forwards`;
+        });
 
-          const animated = targetSection.querySelectorAll(
-            ".card, .mission-card, .org-card"
-          );
-          animated.forEach((el, i) => {
-            el.style.animation = "none";
-            void el.offsetWidth;
-            el.style.animation = `orgIn .6s ${0.06 * i}s forwards`;
-          });
-
-          targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          navLinks.forEach((a) =>
-            a.classList.toggle(
-              "active-link",
-              a.getAttribute("data-target") === id
-            )
-          );
-        }
+        setActiveNav(id);
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
       links.forEach((link) => {
-        link.addEventListener(
-          "click",
-          (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("data-target");
-            localStorage.setItem("lastSection", targetId);
-            activateSection(targetId);
-          },
-          { passive: false }
-        );
-
-        link.addEventListener("click", addRipple, { passive: true });
         link.classList.add("tap-bump");
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute("data-target");
+          localStorage.setItem("lastSection", targetId);
+          activateSection(targetId);
+        });
       });
 
       const last = localStorage.getItem("lastSection");
       if (last && document.getElementById(last)) activateSection(last);
 
-      // ========= Thème sombre/clair (clair par défaut) + click audio =========
+      // ========= Thème sombre/clair =========
       const toggle = document.getElementById("theme-toggle");
-      const thumb = toggle.querySelector(".thumb");
-
-      const theStoredTheme = localStorage.getItem("theme");
+      const thumb = toggle?.querySelector(".thumb");
 
       const applyTheme = (t) => {
         document.body.dataset.theme = t;
         localStorage.setItem("theme", t);
-        thumb.textContent = t === "dark" ? "☀️" : "🌙";
-        document.body.style.filter = "opacity(.98)";
-        setTimeout(() => (document.body.style.filter = ""), 200);
+        if (thumb) thumb.textContent = t === "dark" ? "☀️" : "🌙";
       };
 
-      applyTheme(theStoredTheme === "dark" ? "dark" : "light");
+      applyTheme(localStorage.getItem("theme") === "dark" ? "dark" : "light");
 
-      toggle.addEventListener(
-        "click",
-        () => {
-          const next = document.body.dataset.theme === "dark" ? "light" : "dark";
-          applyTheme(next);
-          AudioKit.playClick();
-        },
-        { passive: true }
-      );
+      toggle?.addEventListener("click", () => {
+        const next = document.body.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
 
-      // ========= Intro auto : ~2s puis fondu + whoosh (avec sécurité) =========
+      // ========= Intro (sans audio) =========
       const intro = document.getElementById("intro-screen");
       const introSkip = document.getElementById("intro-skip");
       const introDisable = document.getElementById("intro-disable");
-      const introSound = document.getElementById("intro-sound");
 
       function hideIntroNow() {
         if (!intro || !document.body.contains(intro)) return;
@@ -2280,87 +1993,50 @@
             localStorage.getItem("introDisabled") === "true" ||
             localStorage.getItem("introSeen") === "true"
           ) {
-            if (intro) intro.remove();
+            intro?.remove();
             return;
           }
         } catch (e) {}
 
         window.addEventListener("DOMContentLoaded", () => {
+          setTimeout(() => {
+            hideIntroNow();
+            try {
+              localStorage.setItem("introSeen", "true");
+            } catch (e) {}
+          }, 2000);
+        });
+
+        introSkip?.addEventListener("click", () => {
+          hideIntroNow();
           try {
-            introSound.currentTime = 0;
-            introSound.volume = 0.5;
-            introSound.play().catch(() => {});
+            localStorage.setItem("introSeen", "true");
           } catch (e) {}
-
-          setTimeout(() => {
-            hideIntroNow();
-            try {
-              localStorage.setItem("introSeen", "true");
-            } catch (e) {}
-          }, 2000 + Math.random() * 300);
         });
 
-        if (introSkip)
-          introSkip.addEventListener(
-            "click",
-            () => {
-              hideIntroNow();
-              try {
-                localStorage.setItem("introSeen", "true");
-              } catch (e) {}
-            },
-            { passive: true }
-          );
-
-        if (introDisable)
-          introDisable.addEventListener(
-            "click",
-            () => {
-              try {
-                localStorage.setItem("introDisabled", "true");
-              } catch (e) {}
-              hideIntroNow();
-            },
-            { passive: true }
-          );
-
-        window.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            hideIntroNow();
-            try {
-              localStorage.setItem("introSeen", "true");
-            } catch (e) {}
-          }
-        });
-
-        window.addEventListener("load", () => {
-          setTimeout(() => {
-            if (document.body.contains(intro)) {
-              hideIntroNow();
-              try {
-                localStorage.setItem("introSeen", "true");
-              } catch (e) {}
-            }
-          }, 3000);
+        introDisable?.addEventListener("click", () => {
+          try {
+            localStorage.setItem("introDisabled", "true");
+          } catch (e) {}
+          hideIntroNow();
         });
       })();
 
-      // ========= Lazy fade-in images =========
-      const lazyImgs = document.querySelectorAll('img[loading="lazy"]');
+      // ========= Lazy images =========
+      const lazyImgs = $$('img[loading="lazy"]');
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("loaded");
-              io.unobserve(entry.target);
-            }
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("loaded");
+            io.unobserve(entry.target);
           });
         },
         { rootMargin: "100px" }
       );
       lazyImgs.forEach((img) => io.observe(img));
 
-      // ========= Scroll progress bar + Parallaxe + BackToTop =========
+      // ========= Scroll progress + BackToTop =========
       const progress = document.getElementById("progress");
       const backToTop = document.getElementById("backToTop");
 
@@ -2369,19 +2045,18 @@
         const docH = document.documentElement.scrollHeight - window.innerHeight;
         const percent = Math.max(0, Math.min(1, scrollY / (docH || 1)));
 
-        progress.style.width = percent * 100 + "%";
+        if (progress) progress.style.width = percent * 100 + "%";
 
-        if (scrollY > 300) backToTop.classList.add("show");
-        else backToTop.classList.remove("show");
-
-        document.body.style.setProperty("--parallaxY", scrollY * 0.02 + "px");
-        document.body.style.setProperty("--parallaxX", scrollY * 0.01 + "px");
+        if (backToTop) {
+          if (scrollY > 300) backToTop.classList.add("show");
+          else backToTop.classList.remove("show");
+        }
       };
 
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
 
-      backToTop.addEventListener(
+      backToTop?.addEventListener(
         "click",
         () => window.scrollTo({ top: 0, behavior: "smooth" }),
         { passive: true }
@@ -2391,21 +2066,13 @@
       const sectionObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.id;
+            if (!entry.isIntersecting) return;
+            setActiveNav(entry.target.id);
 
-              navLinks.forEach((a) => {
-                a.classList.toggle(
-                  "active-link",
-                  a.getAttribute("data-target") === id
-                );
-              });
-
-              const h2 = entry.target.querySelector("h2");
-              if (h2) {
-                h2.classList.add("inview");
-                setTimeout(() => h2.classList.remove("inview"), 1200);
-              }
+            const h2 = entry.target.querySelector("h2");
+            if (h2) {
+              h2.classList.add("inview");
+              setTimeout(() => h2.classList.remove("inview"), 1200);
             }
           });
         },
@@ -2413,7 +2080,7 @@
       );
       sections.forEach((s) => sectionObserver.observe(s));
 
-      // ========= Mode Présentation Jury (corrigé pour sortir proprement) =========
+      // ========= Mode Présentation Jury =========
       const presBtn = document.getElementById("presentation-mode");
       const juryBar = document.getElementById("jury-controls");
       const juryPrev = document.getElementById("jury-prev");
@@ -2426,9 +2093,7 @@
       const navEl = document.querySelector("nav");
       const fullEl = document.documentElement;
 
-      const order = Array.from(document.querySelectorAll("main section")).map(
-        (s) => s.id
-      );
+      const order = sections.map((s) => s.id);
 
       function currentSectionIndex() {
         const active = document.querySelector("main section.active");
@@ -2460,7 +2125,7 @@
         document.getElementById("backToTop").style.display = "none";
         juryBar.style.display = "flex";
 
-        if (fullEl.requestFullscreen) fullEl.requestFullscreen().catch(() => {});
+        fullEl.requestFullscreen?.().catch(() => {});
         presBtn.textContent = "⤺ Quitter";
       }
 
@@ -2481,20 +2146,18 @@
         document.getElementById("backToTop").style.display = "";
         juryBar.style.display = "none";
 
-        if (document.fullscreenElement && document.exitFullscreen)
-          document.exitFullscreen().catch(() => {});
-
+        document.exitFullscreen?.().catch(() => {});
         presBtn.textContent = "🎤 Présentation";
       }
 
-      function togglePresentation() {
-        presOn ? exitPresentation() : enterPresentation();
-      }
-
-      presBtn.addEventListener("click", togglePresentation, { passive: true });
-      juryPrev.addEventListener("click", () => navigate(-1), { passive: true });
-      juryNext.addEventListener("click", () => navigate(1), { passive: true });
-      juryQuit.addEventListener("click", exitPresentation, { passive: true });
+      presBtn?.addEventListener(
+        "click",
+        () => (presOn ? exitPresentation() : enterPresentation()),
+        { passive: true }
+      );
+      juryPrev?.addEventListener("click", () => navigate(-1), { passive: true });
+      juryNext?.addEventListener("click", () => navigate(1), { passive: true });
+      juryQuit?.addEventListener("click", exitPresentation, { passive: true });
 
       window.addEventListener("keydown", (e) => {
         if (!presOn) return;
@@ -2513,41 +2176,16 @@
         }
       });
 
-      // ========= Ripple sur mission cards et liens =========
-      document
-        .querySelectorAll(".mission-card, .welcome-links a, nav > ul > li > a")
-        .forEach((el) => {
-          el.addEventListener("click", addRipple, { passive: true });
-        });
-
-      // ========= Signature typewriter (footer) =========
-      (function () {
-        const sig = document.getElementById("sig");
-        const full = sig.innerHTML;
-        let i = 0;
-
-        function type() {
-          sig.innerHTML =
-            full.slice(0, i++) + '<span style="opacity:.4">|</span>';
-          if (i <= full.length) requestAnimationFrame(type);
-          else sig.innerHTML = full;
-        }
-
-        setTimeout(type, 500);
-      })();
-
-      // ========= Initialisation de la CARTE (Leaflet) =========
+      // ========= Leaflet Map =========
       (function initMap() {
         const el = document.getElementById("map-cf");
         if (!el) return;
 
-        // Coordonnées approximatives de la Comédie-Française (Place Colette)
         const cf = [48.8638, 2.3376];
 
-        // Carte claire standard (OSM)
         const map = L.map(el, {
           zoomControl: true,
-          scrollWheelZoom: false, // évite les zooms involontaires pendant le scroll
+          scrollWheelZoom: false,
           attributionControl: true,
         }).setView(cf, 16);
 
@@ -2556,21 +2194,20 @@
           attribution: "&copy; OpenStreetMap contributors",
         }).addTo(map);
 
-        const marker = L.marker(cf).addTo(map);
-        marker
+        L.marker(cf)
+          .addTo(map)
           .bindPopup("<b>Comédie-Française</b><br>1 Pl. Colette, 75001 Paris")
           .openPopup();
 
-        // Ajuste la taille du canvas de la carte si l’onglet est activé plus tard
-        const observer = new MutationObserver(() => {
-          map.invalidateSize(false);
-        });
-        observer.observe(document.getElementById("presentation_entreprise"), {
+        const obsTarget = document.getElementById("presentation_entreprise");
+        if (!obsTarget) return;
+
+        const observer = new MutationObserver(() => map.invalidateSize(false));
+        observer.observe(obsTarget, {
           attributes: true,
           attributeFilter: ["class"],
         });
 
-        // Invalidate size au redimensionnement
         window.addEventListener("resize", () => map.invalidateSize(false), {
           passive: true,
         });
