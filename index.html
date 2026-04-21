@@ -4,1155 +4,386 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio Danis Gouedart</title>
-
-    <!-- police Inter -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Leaflet (carte claire) -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
-
-    <!-- Meta pour SEO -->
-    <meta
-      name="description"
-      content="Portfolio de Danis Gouedart - BTS SIO SISR - alternant à la Comédie-Française."
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <meta name="description" content="Portfolio de Danis Gouedart - BTS SIO SISR - alternant à la Comédie-Française." />
     <meta name="author" content="Danis Gouedart" />
-
     <style>
-      /* =========================== RESET & BASE =========================== */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height: 100%; }
+      html { scroll-behavior: smooth; }
       body {
         font-family: "Inter", sans-serif;
-
-        /* Fond dégradé doux + variables de parallaxe */
-        --grad1: #f0f4f8;
-        --grad2: #e6eef7;
-        --grad3: #ffffff;
-        --grad4: #eef6ff;
-        --parallaxX: 0%;
-        --parallaxY: 0%;
-
-        background: radial-gradient(
-            1200px 800px at calc(10% + var(--parallaxX))
-              calc(20% + var(--parallaxY)),
-            var(--grad1),
-            transparent 60%
-          ),
-          radial-gradient(
-            1000px 900px at calc(90% - var(--parallaxX))
-              calc(10% + var(--parallaxY)),
-            var(--grad2),
-            transparent 60%
-          ),
-          radial-gradient(
-            900px 700px at calc(20% + var(--parallaxX))
-              calc(90% - var(--parallaxY)),
-            var(--grad4),
-            transparent 60%
-          ),
-          linear-gradient(
-            135deg,
-            var(--grad1),
-            var(--grad2) 40%,
-            var(--grad3) 100%
-          );
+        --grad1: #f0f4f8; --grad2: #e6eef7; --grad3: #ffffff; --grad4: #eef6ff;
+        --parallaxX: 0%; --parallaxY: 0%;
+        background: radial-gradient(1200px 800px at calc(10% + var(--parallaxX)) calc(20% + var(--parallaxY)), var(--grad1), transparent 60%),
+          radial-gradient(1000px 900px at calc(90% - var(--parallaxX)) calc(10% + var(--parallaxY)), var(--grad2), transparent 60%),
+          radial-gradient(900px 700px at calc(20% + var(--parallaxX)) calc(90% - var(--parallaxY)), var(--grad4), transparent 60%),
+          linear-gradient(135deg, var(--grad1), var(--grad2) 40%, var(--grad3) 100%);
         background-size: 140% 140%, 140% 140%, 140% 140%, 100% 100%;
         animation: bgShift 35s ease-in-out infinite alternate;
-
-        color: #111827;
-        min-height: 100vh;
-        line-height: 1.5;
-        padding-bottom: 60px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        color: #111827; min-height: 100vh; line-height: 1.5; padding-bottom: 60px;
+        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
         transition: background 0.6s ease, color 0.6s ease, filter 0.4s ease;
       }
-
       @keyframes bgShift {
-        0% {
-          background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%;
-        }
-        50% {
-          background-position: 30% 20%, 80% 10%, 10% 80%, 0% 0%;
-        }
-        100% {
-          background-position: 60% 40%, 60% 20%, 20% 60%, 0% 0%;
-        }
+        0% { background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%; }
+        50% { background-position: 30% 20%, 80% 10%, 10% 80%, 0% 0%; }
+        100% { background-position: 60% 40%, 60% 20%, 20% 60%, 0% 0%; }
       }
+      #bg-network { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.75; }
 
-      /* =========================== CANVAS RESEAU (derrière tout) =========================== */
-      #bg-network {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0.75;
-      }
-
-      /* =========================== INTRO ÉCRAN =========================== */
+      /* INTRO */
       #intro-screen {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        backdrop-filter: blur(2px);
-        background: inherit;
-        flex-direction: column;
-        gap: 0.75rem;
-        transition: opacity 0.8s ease, transform 0.8s ease,
-          visibility 0.8s ease;
+        position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;
+        backdrop-filter: blur(2px); background: inherit; flex-direction: column; gap: 0.75rem;
+        transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
       }
-      #intro-screen.intro-hidden {
-        opacity: 0;
-        transform: scale(0.985) translateY(-4px);
-        visibility: hidden;
-      }
-      #intro-logo {
-        width: min(22vw, 96px);
-        height: min(22vw, 96px);
-        filter: drop-shadow(0 6px 18px rgba(37, 99, 235, 0.35));
-      }
+      #intro-screen.intro-hidden { opacity: 0; transform: scale(0.985) translateY(-4px); visibility: hidden; }
+      #intro-logo { width: min(22vw, 96px); height: min(22vw, 96px); filter: drop-shadow(0 6px 18px rgba(37,99,235,0.35)); }
       #intro-content {
-        font-size: clamp(2rem, 6vw, 4rem);
-        font-weight: 800;
-        letter-spacing: 0.03em;
-        background: linear-gradient(
-          90deg,
-          #2563eb 0%,
-          #60a5fa 30%,
-          #93c5fd 50%,
-          #60a5fa 70%,
-          #2563eb 100%
-        );
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        filter: drop-shadow(0 6px 18px rgba(37, 99, 235, 0.25));
-        background-size: 200% auto;
-        animation: shine 1.2s ease-in-out infinite alternate,
-          introPop 0.6s ease-out both;
-        text-align: center;
-        padding: 0 0.3em;
+        font-size: clamp(2rem, 6vw, 4rem); font-weight: 800; letter-spacing: 0.03em;
+        background: linear-gradient(90deg, #2563eb 0%, #60a5fa 30%, #93c5fd 50%, #60a5fa 70%, #2563eb 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        filter: drop-shadow(0 6px 18px rgba(37,99,235,0.25)); background-size: 200% auto;
+        animation: shine 1.2s ease-in-out infinite alternate, introPop 0.6s ease-out both;
+        text-align: center; padding: 0 0.3em;
       }
-      #intro-actions {
-        display: flex;
-        gap: 0.6rem;
-        margin-top: 0.2rem;
+      #intro-actions { display: flex; gap: 0.6rem; margin-top: 0.2rem; }
+      #intro-skip, #intro-disable {
+        font-size: 0.95rem; color: #0f172a; background: rgba(255,255,255,0.6);
+        border: 1px solid rgba(0,0,0,0.05); padding: 0.35rem 0.6rem; border-radius: 10px;
+        cursor: pointer; transition: 0.25s; backdrop-filter: saturate(140%) blur(8px);
       }
-      #intro-skip,
-      #intro-disable {
-        font-size: 0.95rem;
-        color: #0f172a;
-        background: rgba(255, 255, 255, 0.6);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 0.35rem 0.6rem;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.25s;
-        backdrop-filter: saturate(140%) blur(8px);
-      }
-      #intro-disable {
-        font-size: 0.88rem;
-        opacity: 0.9;
-        color: #1e40af;
-        text-decoration: underline;
-        background: transparent;
-        border: none;
-      }
-      @keyframes shine {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 100% 50%;
-        }
-      }
-      @keyframes introPop {
-        from {
-          opacity: 0;
-          transform: translateY(8px) scale(0.98);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
+      #intro-disable { font-size: 0.88rem; opacity: 0.9; color: #1e40af; text-decoration: underline; background: transparent; border: none; }
+      @keyframes shine { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+      @keyframes introPop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
 
-      /* =========================== HEADER (glassmorphism) =========================== */
+      /* HEADER */
       header {
-        background: rgba(31, 41, 55, 0.6);
-        padding: 1.1rem 2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: saturate(140%) blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        background: rgba(31,41,55,0.6); padding: 1.1rem 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25); position: sticky; top: 0; z-index: 100;
+        backdrop-filter: saturate(140%) blur(10px); border-bottom: 1px solid rgba(255,255,255,0.12);
+        display: flex; align-items: center; gap: 0.75rem;
       }
-      header h1 {
-        font-size: 1.9rem;
-        color: #f9fafb;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        margin: 0;
-      }
-      .logo-wrap {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
+      header h1 { font-size: 1.9rem; color: #f9fafb; font-weight: 700; letter-spacing: 1px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); margin: 0; }
+      .logo-wrap { display: flex; align-items: center; gap: 0.75rem; }
 
-      /* =========================== PROGRESS BAR =========================== */
-      .progress-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 4px;
-        width: 0%;
-        background: linear-gradient(90deg, #3b82f6, #60a5fa);
-        z-index: 1000;
-        box-shadow: 0 0 18px rgba(59, 130, 246, 0.6);
-        transition: width 0.1s linear;
-      }
+      /* PROGRESS BAR */
+      .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 0%; background: linear-gradient(90deg, #3b82f6, #60a5fa); z-index: 1000; box-shadow: 0 0 18px rgba(59,130,246,0.6); transition: width 0.1s linear; }
 
-      /* =========================== NAVIGATION + thème =========================== */
+      /* INDICATEUR DE SECTION */
+      #section-indicator {
+        position: fixed; top: 72px; right: 16px; z-index: 999;
+        background: rgba(37,99,235,0.85); color: #fff;
+        font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.7rem;
+        border-radius: 20px; backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        letter-spacing: 0.03em;
+      }
+      #section-indicator.visible { opacity: 1; }
+
+      /* NAV */
       nav {
-        background: rgba(55, 65, 81, 0.55);
-        padding: 1rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-        backdrop-filter: saturate(160%) blur(10px);
-        position: sticky;
-        top: calc(68px);
-        z-index: 100;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(55,65,81,0.55); padding: 1rem 2rem;
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12); backdrop-filter: saturate(160%) blur(10px);
+        position: sticky; top: calc(68px); z-index: 100;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         transition: transform 0.35s ease, opacity 0.35s ease;
       }
-      nav ul {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-      nav li {
-        position: relative;
-      }
+      nav ul { display: flex; list-style: none; gap: 2rem; flex-wrap: wrap; align-items: center; }
+      nav li { position: relative; }
       nav > ul > li > a {
-        position: relative;
-        text-decoration: none;
-        color: #f3f4f6;
-        font-weight: 600;
-        padding: 0.6rem 1.2rem;
-        border-radius: 12px;
-        transition: all 0.25s ease;
-        background: rgba(75, 85, 99, 0.65);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.09);
+        position: relative; text-decoration: none; color: #f3f4f6; font-weight: 600;
+        padding: 0.6rem 1.2rem; border-radius: 12px; transition: all 0.25s ease;
+        background: rgba(75,85,99,0.65); box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        overflow: hidden; border: 1px solid rgba(255,255,255,0.09);
       }
-      nav > ul > li > a:hover {
-        background: #2563eb;
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-      }
-      nav > ul > li > a.active-link {
-        outline: 2px solid rgba(96, 165, 250, 0.7);
-        background: rgba(59, 130, 246, 0.25);
-      }
+      nav > ul > li > a:hover { background: #2563eb; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+      nav > ul > li > a.active-link { outline: 2px solid rgba(96,165,250,0.7); background: rgba(59,130,246,0.25); }
+      .ripple { position: absolute; border-radius: 50%; transform: scale(0); pointer-events: none; background: rgba(255,255,255,0.45); animation: ripple 0.45s linear; }
+      @keyframes ripple { to { transform: scale(3.5); opacity: 0; } }
+      .tap-bump:active { transform: translateY(0) scale(0.98); }
+      nav ul ul { display: none; position: absolute; top: 100%; left: 0; background: rgba(75,85,99,0.9); border-radius: 10px; padding: 0.5rem 0; z-index: 10; box-shadow: 0 4px 14px rgba(0,0,0,0.2); backdrop-filter: blur(8px); }
+      nav li:hover > ul { display: block; }
+      nav ul ul li a { display: block; padding: 0.6rem 1.5rem; color: #f3f4f6; text-decoration: none; transition: all 0.2s ease; }
+      nav ul ul li a:hover { background: #2563eb; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+      .actions { display: flex; align-items: center; gap: 0.6rem; }
+      .btn { padding: 0.55rem 0.85rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.2); color: #ffffff; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.15); transition: 0.25s; backdrop-filter: blur(8px); }
+      .btn:hover { transform: translateY(-1px); background: rgba(37,99,235,0.5); }
+      .btn:active { transform: translateY(0); }
+      .theme-toggle { position: relative; width: 62px; height: 34px; border-radius: 999px; border: none; cursor: pointer; background: linear-gradient(180deg, #e5e7eb, #cbd5e1); padding: 4px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.15); transition: background 0.3s ease, transform 0.2s ease; }
+      .theme-toggle:hover { transform: translateY(-1px); }
+      .theme-toggle .thumb { position: absolute; top: 4px; left: 4px; width: 26px; height: 26px; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.18); transition: left 0.35s cubic-bezier(0.2,0.8,0.2,1), transform 0.35s, background 0.35s; font-size: 16px; }
+      body[data-theme="dark"] .theme-toggle { background: linear-gradient(180deg, #0b1220, #111827); }
+      body[data-theme="dark"] .theme-toggle .thumb { left: 32px; background: #0f172a; color: #e2e8f0; }
 
-      /* Ripple DISCRET (nouvelle taille/durée) */
-      .ripple {
-        position: absolute;
-        border-radius: 50%;
-        transform: scale(0);
-        pointer-events: none;
-        background: rgba(255, 255, 255, 0.45);
-        animation: ripple 0.45s linear;
-      }
-      @keyframes ripple {
-        to {
-          transform: scale(3.5);
-          opacity: 0;
-        }
-      }
-      .tap-bump:active {
-        transform: translateY(0) scale(0.98);
-      }
+      /* MAIN */
+      main { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+      section { display: none; animation: fadeIn 0.5s ease-out forwards; background: transparent; will-change: opacity, transform; }
+      section.active { display: block; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      .transition-enter { opacity: 0; transform: translateY(8px); }
+      .transition-enter-active { opacity: 1; transform: none; transition: 0.45s cubic-bezier(0.2,0.8,0.2,1); }
+      h2 { font-size: 2.2rem; margin-bottom: 1.2rem; border-bottom: 3px solid #d1d5db; padding-bottom: 0.6rem; color: #1f2937; position: relative; }
+      h2:hover::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #60a5fa, transparent); filter: blur(0.5px); animation: shineLine 1.2s ease; }
+      h2.inview { text-shadow: 0 3px 22px rgba(59,130,246,0.28); }
+      @keyframes shineLine { from { transform: translateX(-20%); opacity: 0.2; } to { transform: translateX(20%); opacity: 1; } }
+      h3 { margin-top: 1.2rem; margin-bottom: 0.6rem; color: #1f2937; }
+      p, li { font-size: 1.05rem; line-height: 1.7; color: #1f2937; }
+      ul li { margin-left: 1.2rem; margin-bottom: 0.6rem; }
+      a { color: #2563eb; text-decoration: none; transition: transform 0.25s, color 0.25s; }
+      a:hover { color: #1d4ed8; text-decoration: underline; transform: translateY(-2px); }
+      iframe, img, object, embed { max-width: 100%; height: auto; border-radius: 12px; display: block; }
 
-      nav ul ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: rgba(75, 85, 99, 0.9);
-        border-radius: 10px;
-        padding: 0.5rem 0;
-        z-index: 10;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
-      }
-      nav li:hover > ul {
-        display: block;
-      }
-      nav ul ul li a {
-        display: block;
-        padding: 0.6rem 1.5rem;
-        color: #f3f4f6;
-        text-decoration: none;
-        transition: all 0.2s ease;
-      }
-      nav ul ul li a:hover {
-        background: #2563eb;
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
+      /* ORGANIGRAMME */
+      .organigramme { margin-top: 1.5rem; padding: 1.75rem; background: linear-gradient(180deg, rgba(248,250,252,0.65) 0%, rgba(238,242,255,0.65) 100%); border-radius: 20px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 8px 28px rgba(2,6,23,0.08), inset 0 1px 0 rgba(255,255,255,0.7); position: relative; overflow: hidden; backdrop-filter: blur(8px) saturate(130%); }
+      .organigramme::after { content: ""; position: absolute; inset: -20%; background: radial-gradient(40% 40% at 60% 0%, rgba(37,99,235,0.08) 0, transparent 60%), radial-gradient(30% 30% at 0% 80%, rgba(99,102,241,0.08) 0, transparent 60%); animation: bgFloat 24s linear infinite; pointer-events: none; }
+      @keyframes bgFloat { to { transform: translate3d(2%,-2%,0) rotate(1deg); } }
+      .org-level { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+      .org-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+      .org-card { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; padding: 0.9rem 1.1rem; border-radius: 14px; text-align: center; min-width: 190px; box-shadow: 0 10px 24px rgba(2,6,23,0.18); transition: transform 0.35s, box-shadow 0.35s, filter 0.35s; position: relative; isolation: isolate; }
+      .org-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 36px rgba(2,6,23,0.28); filter: saturate(1.1); }
+      .org-card.alt { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+      .org-title { font-weight: 700; color: #1f2937; text-align: center; padding: 0.25rem 0.75rem; border-radius: 12px; line-height: 1.3; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.18); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7); }
+      [data-level] { opacity: 0; transform: translateY(10px) scale(0.98); animation: orgIn 0.6s forwards; }
+      [data-level="1"] { animation-delay: 0.05s; } [data-level="2"] { animation-delay: 0.15s; } [data-level="3"] { animation-delay: 0.25s; } [data-level="4"] { animation-delay: 0.35s; }
+      @keyframes orgIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+      .org-card.me strong { color: #facc15; text-shadow: 0 0 6px rgba(250,204,21,0.6); }
 
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-      .btn {
-        padding: 0.55rem 0.85rem;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.2);
-        color: #ffffff;
-        cursor: pointer;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-        transition: 0.25s;
-        backdrop-filter: blur(8px);
-      }
-      .btn:hover {
-        transform: translateY(-1px);
-        background: rgba(37, 99, 235, 0.5);
-      }
-      .btn:active {
-        transform: translateY(0);
-      }
+      /* PHOTO */
+      .photo-container { float: right; margin: 0 0 1.5rem 2rem; max-width: 200px; text-align: center; }
+      .photo-container img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; box-shadow: 0 6px 20px rgba(0,0,0,0.3); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.45s, filter 0.35s; border: 6px solid rgba(255,255,255,0.9); background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2)); }
+      .photo-container img.loaded { opacity: 1; transform: none; transition: opacity 0.6s ease, transform 0.6s ease; }
+      .photo-container img:hover { transform: scale(1.05); box-shadow: 0 10px 28px rgba(59,130,246,0.45), 0 0 0 8px rgba(59,130,246,0.1); filter: saturate(1.03); }
 
-      .theme-toggle {
-        position: relative;
-        width: 62px;
-        height: 34px;
-        border-radius: 999px;
-        border: none;
-        cursor: pointer;
-        background: linear-gradient(180deg, #e5e7eb, #cbd5e1);
-        padding: 4px;
-        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15),
-          0 4px 12px rgba(0, 0, 0, 0.15);
-        transition: background 0.3s ease, transform 0.2s ease;
-      }
-      .theme-toggle:hover {
-        transform: translateY(-1px);
-      }
-      .theme-toggle .thumb {
-        position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        background: #fff;
-        display: grid;
-        place-items: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
-        transition: left 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-          transform 0.35s, background 0.35s;
-        font-size: 16px;
-      }
-      body[data-theme="dark"] .theme-toggle {
-        background: linear-gradient(180deg, #0b1220, #111827);
-      }
-      body[data-theme="dark"] .theme-toggle .thumb {
-        left: 32px;
-        background: #0f172a;
-        color: #e2e8f0;
-      }
+      /* CARDS */
+      .card { background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(240,244,248,0.85)); padding: 1.2rem 1.5rem; border-radius: 16px; margin-top: 1.2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12); transition: transform 0.3s, box-shadow 0.3s; backdrop-filter: blur(8px) saturate(130%); border: 1px solid rgba(255,255,255,0.6); }
+      .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.2); }
 
-      /* =========================== MAIN =========================== */
-      main {
-        padding: 4rem 2rem;
-        max-width: 1100px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-      section {
-        display: none;
-        animation: fadeIn 0.5s ease-out forwards;
-        background: transparent;
-        will-change: opacity, transform;
-      }
-      section.active {
-        display: block;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .transition-enter {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      .transition-enter-active {
-        opacity: 1;
-        transform: none;
-        transition: 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
+      /* BARRES DE COMPETENCES */
+      .skills-section { margin-top: 1.4rem; }
+      .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 2rem; margin-top: 0.8rem; }
+      @media (max-width: 700px) { .skills-grid { grid-template-columns: 1fr; } }
+      .skill-item { margin-bottom: 0.2rem; }
+      .skill-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+      .skill-name { font-size: 0.9rem; font-weight: 600; color: #1f2937; }
+      .skill-pct { font-size: 0.78rem; font-weight: 700; color: #2563eb; }
+      .skill-bar-bg { height: 8px; background: rgba(203,213,225,0.6); border-radius: 999px; overflow: hidden; }
+      .skill-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2563eb, #60a5fa); width: 0%; transition: width 1.2s cubic-bezier(0.2,0.8,0.2,1); }
+      .skill-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+      .skill-badge { font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 20px; background: rgba(37,99,235,0.1); color: #1e40af; border: 1px solid rgba(37,99,235,0.2); }
+      body[data-theme="dark"] .skill-name { color: #e5e7eb; }
+      body[data-theme="dark"] .skill-bar-bg { background: rgba(51,65,85,0.6); }
+      body[data-theme="dark"] .skill-badge { background: rgba(37,99,235,0.2); color: #93c5fd; border-color: rgba(96,165,250,0.3); }
 
-      /* Titres brillants au survol + surbrillance quand visible */
-      h2 {
-        font-size: 2.2rem;
-        margin-bottom: 1.2rem;
-        border-bottom: 3px solid #d1d5db;
-        padding-bottom: 0.6rem;
-        color: #1f2937;
-        position: relative;
-      }
-      h2:hover::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #60a5fa, transparent);
-        filter: blur(0.5px);
-        animation: shineLine 1.2s ease;
-      }
-      h2.inview {
-        text-shadow: 0 3px 22px rgba(59, 130, 246, 0.28);
-      }
-      @keyframes shineLine {
-        from {
-          transform: translateX(-20%);
-          opacity: 0.2;
-        }
-        to {
-          transform: translateX(20%);
-          opacity: 1;
-        }
-      }
-      h3 {
-        margin-top: 1.2rem;
-        margin-bottom: 0.6rem;
-        color: #1f2937;
-      }
-      p,
-      li {
-        font-size: 1.05rem;
-        line-height: 1.7;
-        color: #1f2937;
-      }
-      ul li {
-        margin-left: 1.2rem;
-        margin-bottom: 0.6rem;
-      }
-      a {
-        color: #2563eb;
-        text-decoration: none;
-        transition: transform 0.25s, color 0.25s;
-      }
-      a:hover {
-        color: #1d4ed8;
-        text-decoration: underline;
-        transform: translateY(-2px);
-      }
-      iframe,
-      img,
-      object,
-      embed {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        display: block;
-      }
-
-      /* =========================== ORGANIGRAMME =========================== */
-      .organigramme {
-        margin-top: 1.5rem;
-        padding: 1.75rem;
-        background: linear-gradient(
-          180deg,
-          rgba(248, 250, 252, 0.65) 0%,
-          rgba(238, 242, 255, 0.65) 100%
-        );
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        box-shadow: 0 8px 28px rgba(2, 6, 23, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.7);
-        position: relative;
-        overflow: hidden;
-        backdrop-filter: blur(8px) saturate(130%);
-      }
-      .organigramme::after {
-        content: "";
-        position: absolute;
-        inset: -20%;
-        background: radial-gradient(
-            40% 40% at 60% 0%,
-            rgba(37, 99, 235, 0.08) 0,
-            transparent 60%
-          ),
-          radial-gradient(
-            30% 30% at 0% 80%,
-            rgba(99, 102, 241, 0.08) 0,
-            transparent 60%
-          );
-        animation: bgFloat 24s linear infinite;
-        pointer-events: none;
-      }
-      @keyframes bgFloat {
-        to {
-          transform: translate3d(2%, -2%, 0) rotate(1deg);
-        }
-      }
-      .org-level {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-      }
-      .org-row {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .org-card {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        color: #fff;
-        padding: 0.9rem 1.1rem;
-        border-radius: 14px;
-        text-align: center;
-        min-width: 190px;
-        box-shadow: 0 10px 24px rgba(2, 6, 23, 0.18);
-        transition: transform 0.35s, box-shadow 0.35s, filter 0.35s;
-        position: relative;
-        isolation: isolate;
-      }
-      .org-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 16px 36px rgba(2, 6, 23, 0.28);
-        filter: saturate(1.1);
-      }
-      .org-card.alt {
-        background: linear-gradient(135deg, #3b82f6, #60a5fa);
-      }
-      .org-title {
-        font-weight: 700;
-        color: #1f2937;
-        text-align: center;
-        padding: 0.25rem 0.75rem;
-        border-radius: 12px;
-        line-height: 1.3;
-        background: rgba(99, 102, 241, 0.08);
-        border: 1px solid rgba(99, 102, 241, 0.18);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-      }
-      [data-level] {
-        opacity: 0;
-        transform: translateY(10px) scale(0.98);
-        animation: orgIn 0.6s forwards;
-      }
-      [data-level="1"] {
-        animation-delay: 0.05s;
-      }
-      [data-level="2"] {
-        animation-delay: 0.15s;
-      }
-      [data-level="3"] {
-        animation-delay: 0.25s;
-      }
-      [data-level="4"] {
-        animation-delay: 0.35s;
-      }
-      @keyframes orgIn {
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      /* Nom de Danis en couleur différente */
-      .org-card.me strong {
-        color: #facc15;
-        text-shadow: 0 0 6px rgba(250, 204, 21, 0.6);
-      }
-
-      /* =========================== PHOTO APPRENTI =========================== */
-      .photo-container {
-        float: right;
-        margin: 0 0 1.5rem 2rem;
-        max-width: 200px;
-        text-align: center;
-      }
-      .photo-container img {
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 50%;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
-          box-shadow 0.45s, filter 0.35s;
-        border: 6px solid rgba(255, 255, 255, 0.9);
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.6),
-          rgba(255, 255, 255, 0.2)
-        );
-      }
-      .photo-container img.loaded {
-        opacity: 1;
-        transform: none;
-        transition: opacity 0.6s ease, transform 0.6s ease;
-      }
-      .photo-container img:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 28px rgba(59, 130, 246, 0.45),
-          0 0 0 8px rgba(59, 130, 246, 0.1);
-        filter: saturate(1.03);
-      }
-
-      /* =========================== CARDS =========================== */
-      .card {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.85),
-          rgba(240, 244, 248, 0.85)
-        );
-        padding: 1.2rem 1.5rem;
-        border-radius: 16px;
-        margin-top: 1.2rem;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-        transition: transform 0.3s, box-shadow 0.3s;
-        backdrop-filter: blur(8px) saturate(130%);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-      }
-      .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-      }
-
-      /* =========================== MISSIONS =========================== */
-      .mission-section {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-      }
+      /* MISSIONS */
+      .mission-section { display: flex; flex-direction: column; gap: 0.8rem; }
       .mission-card {
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        background: linear-gradient(
-          135deg,
-          rgba(224, 242, 254, 0.85),
-          rgba(186, 230, 253, 0.85)
-        );
-        padding: 1rem 1.4rem;
-        margin-bottom: 1rem;
-        border-radius: 18px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-        transition: all 0.3s;
-        text-decoration: none;
-        color: #111827;
-        backdrop-filter: blur(6px) saturate(120%);
-        border: 1px solid rgba(255, 255, 255, 0.6);
+        position: relative; overflow: hidden; display: flex; align-items: center; gap: 1rem;
+        background: linear-gradient(135deg, rgba(224,242,254,0.85), rgba(186,230,253,0.85));
+        padding: 1rem 1.4rem; margin-bottom: 0.5rem; border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12); transition: all 0.3s;
+        text-decoration: none; color: #111827; backdrop-filter: blur(6px) saturate(120%);
+        border: 1px solid rgba(255,255,255,0.6);
       }
-      .mission-card:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-        background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        color: #fff;
-      }
-      .mission-card img {
-        width: 42px;
-        height: 42px;
-        transition: transform 0.3s;
-      }
-      .mission-card:hover img {
-        transform: scale(1.1);
-      }
-      .mission-card span {
-        font-weight: 600;
-      }
+      .mission-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.2); background: linear-gradient(135deg, #60a5fa, #3b82f6); color: #fff; }
+      .mission-icon { font-size: 1.6rem; flex-shrink: 0; width: 42px; text-align: center; }
+      .mission-card span { font-weight: 600; }
+      .mission-card small { display: block; font-size: 0.75rem; opacity: 0.75; margin-top: 2px; font-weight: 400; }
+      .mission-card .ripple { background: rgba(255,255,255,0.45); }
 
-      /* affichage discret du code sous le titre */
-      .mission-card small {
-        display: block;
-        font-size: 0.75rem;
-        opacity: 0.75;
-        margin-top: 2px;
-        font-weight: 400;
-      }
+      /* ACCUEIL */
+      .welcome { text-align: center; padding: 3rem 1.5rem; background: linear-gradient(135deg, rgba(239,246,255,0.85), rgba(224,242,254,0.85)); border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); margin-bottom: 1.5rem; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.6); }
+      .welcome h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #1e3a8a; }
+      .welcome p { font-size: 1.1rem; max-width: 900px; margin: 0.5rem auto; color: #0f172a; }
+      .welcome-links { margin-top: 2rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+      .welcome-links a { display: inline-block; padding: 0.6rem 1rem; border-radius: 10px; background: #2563eb; color: white; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+      .welcome-links a:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(37,99,235,0.18); }
 
-      .mission-card .ripple {
-        background: rgba(255, 255, 255, 0.45);
-      }
+      /* BACK TO TOP */
+      #backToTop { position: fixed; right: 18px; bottom: 18px; width: 44px; height: 44px; border-radius: 999px; border: none; background: #2563eb; color: #fff; font-size: 20px; box-shadow: 0 10px 24px rgba(37,99,235,0.35); display: grid; place-items: center; cursor: pointer; opacity: 0; transform: translateY(8px); pointer-events: none; transition: 0.25s; z-index: 999; }
+      #backToTop.show { opacity: 1; transform: none; pointer-events: auto; }
+      #backToTop:hover { filter: brightness(1.05); transform: translateY(-2px); }
 
-      /* =========================== ACCUEIL =========================== */
-      .welcome {
-        text-align: center;
-        padding: 3rem 1.5rem;
-        background: linear-gradient(
-          135deg,
-          rgba(239, 246, 255, 0.85),
-          rgba(224, 242, 254, 0.85)
-        );
-        border-radius: 20px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        margin-bottom: 1.5rem;
-        backdrop-filter: blur(6px);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-      }
-      .welcome h2 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: #1e3a8a;
-      }
-      .welcome p {
-        font-size: 1.1rem;
-        max-width: 900px;
-        margin: 0.5rem auto;
-        color: #0f172a;
-      }
-      .welcome-links {
-        margin-top: 2rem;
-        display: flex;
-        justify-content: center;
-        gap: 0.8rem;
-        flex-wrap: wrap;
-      }
-      .welcome-links a {
-        display: inline-block;
-        padding: 0.6rem 1rem;
-        border-radius: 10px;
-        background: #2563eb;
-        color: white;
-        font-weight: 600;
-        text-decoration: none;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-        overflow: hidden;
-      }
-      .welcome-links a:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 22px rgba(37, 99, 235, 0.18);
-      }
+      /* DOWNLOADS */
+      .downloads { margin-top: 1.25rem; padding: 1rem 1.2rem; border-radius: 14px; background: rgba(59,130,246,0.08); border: 1px dashed rgba(59,130,246,0.3); }
+      .downloads h4 { margin: 0 0 0.5rem 0; color: #1e3a8a; }
+      .downloads ul { margin: 0; padding-left: 1.2rem; }
+      .downloads a { font-weight: 600; }
 
-      /* =========================== BOUTON HAUT DE PAGE =========================== */
-      #backToTop {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        width: 44px;
-        height: 44px;
-        border-radius: 999px;
-        border: none;
-        background: #2563eb;
-        color: #fff;
-        font-size: 20px;
-        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateY(8px);
-        pointer-events: none;
-        transition: 0.25s;
-        z-index: 999;
-      }
-      #backToTop.show {
-        opacity: 1;
-        transform: none;
-        pointer-events: auto;
-      }
-      #backToTop:hover {
-        filter: brightness(1.05);
-        transform: translateY(-2px);
-      }
-
-      /* =========================== ENCART TÉLÉCHARGEMENTS =========================== */
-      .downloads {
-        margin-top: 1.25rem;
-        padding: 1rem 1.2rem;
-        border-radius: 14px;
-        background: rgba(59, 130, 246, 0.08);
-        border: 1px dashed rgba(59, 130, 246, 0.3);
-      }
-      .downloads h4 {
-        margin: 0 0 0.5rem 0;
-        color: #1e3a8a;
-      }
-      .downloads ul {
-        margin: 0;
-        padding-left: 1.2rem;
-      }
-      .downloads a {
-        font-weight: 600;
-      }
-
-      /* =========================== BARRE JURY FLOTTANTE =========================== */
+      /* JURY */
       #jury-controls {
-        position: fixed;
-        left: 16px;
-        bottom: 16px;
-        z-index: 1001;
-        display: none;
-        align-items: center;
-        gap: 8px;
-        background: rgba(37, 99, 235, 0.28);
-        border: 1px solid rgba(96, 165, 250, 0.6);
-        box-shadow: 0 10px 28px rgba(37, 99, 235, 0.35);
-        backdrop-filter: blur(8px);
-        padding: 0.45rem 0.6rem;
-        border-radius: 14px;
-        animation: popIn 0.25s ease-out;
+        position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+        z-index: 1001; display: none; align-items: center; gap: 10px;
+        background: rgba(15,23,42,0.92); border: 1px solid rgba(96,165,250,0.5);
+        box-shadow: 0 12px 36px rgba(0,0,0,0.4); backdrop-filter: blur(12px);
+        padding: 0.6rem 1rem; border-radius: 16px; animation: popIn 0.25s ease-out;
       }
-      #jury-controls button {
-        background: rgba(255, 255, 255, 0.85);
-        color: #0f172a;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        padding: 0.45rem 0.6rem;
-        font-weight: 700;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        transition: 0.2s;
-        min-width: 38px;
-      }
-      #jury-controls button:hover {
-        transform: translateY(-1px);
-      }
-      #jury-controls .quit {
-        background: #ef4444;
-        color: #fff;
-      }
-      @keyframes popIn {
-        from {
-          transform: translateY(6px);
-          opacity: 0;
-        }
-        to {
-          transform: none;
-          opacity: 1;
-        }
-      }
+      #jury-controls button { background: rgba(255,255,255,0.12); color: #f1f5f9; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; cursor: pointer; padding: 0.5rem 0.9rem; font-weight: 700; font-size: 0.9rem; transition: 0.2s; min-width: 44px; }
+      #jury-controls button:hover { background: rgba(37,99,235,0.5); transform: translateY(-1px); }
+      #section-counter { color: #93c5fd; font-size: 0.85rem; font-weight: 700; padding: 0 0.4rem; min-width: 60px; text-align: center; }
+      #jury-controls .quit { background: rgba(239,68,68,0.25); color: #fca5a5; border-color: rgba(239,68,68,0.3); }
+      #jury-controls .quit:hover { background: #ef4444; color: #fff; }
+      @keyframes popIn { from { transform: translateX(-50%) translateY(6px); opacity: 0; } to { transform: translateX(-50%); opacity: 1; } }
 
-      /* =========================== PRINT =========================== */
+      /* PRINT */
       @media print {
-        nav,
-        .welcome-links,
-        .org-card,
-        #backToTop,
-        .progress-bar,
-        #intro-screen,
-        #bg-network,
-        .actions,
-        #jury-controls {
-          display: none !important;
-        }
-        body {
-          background: white;
-          color: black;
-        }
-        main {
-          padding: 0;
-        }
+        nav, .welcome-links, .org-card, #backToTop, .progress-bar, #intro-screen, #bg-network, .actions, #jury-controls, #section-indicator { display: none !important; }
+        body { background: white; color: black; }
+        main { padding: 0; }
       }
 
-      /* =========================== MODE SOMBRE =========================== */
-      body[data-theme="dark"] {
-        --grad1: #0b1220;
-        --grad2: #0f172a;
-        --grad3: #0b1220;
-        --grad4: #111827;
-        color: #e5e7eb;
-      }
-      body[data-theme="dark"] h2,
-      body[data-theme="dark"] h3,
-      body[data-theme="dark"] p,
-      body[data-theme="dark"] li {
-        color: #e5e7eb;
-      }
-      body[data-theme="dark"] h2 {
-        border-bottom-color: #334155;
-      }
-      body[data-theme="dark"] a {
-        color: #60a5fa;
-      }
-      body[data-theme="dark"] a:hover {
-        color: #93c5fd;
-      }
-      body[data-theme="dark"] header {
-        background: rgba(15, 23, 42, 0.6);
-      }
-      body[data-theme="dark"] nav {
-        background: rgba(17, 24, 39, 0.55);
-      }
-      body[data-theme="dark"] nav > ul > li > a {
-        background: rgba(31, 41, 55, 0.65);
-        color: #e5e7eb;
-      }
-      body[data-theme="dark"] nav > ul > li:hover > a {
-        background: #2563eb;
-      }
-      body[data-theme="dark"] nav ul ul {
-        background: rgba(31, 41, 55, 0.9);
-      }
-      body[data-theme="dark"] .welcome {
-        background: linear-gradient(
-          135deg,
-          rgba(11, 18, 32, 0.85),
-          rgba(15, 23, 42, 0.85)
-        );
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      }
-      body[data-theme="dark"] .card {
-        background: linear-gradient(
-          135deg,
-          rgba(16, 24, 39, 0.85),
-          rgba(15, 23, 42, 0.85)
-        );
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-      }
-      body[data-theme="dark"] .mission-card {
-        background: linear-gradient(
-          135deg,
-          rgba(30, 58, 138, 0.85),
-          rgba(30, 64, 175, 0.85)
-        );
-        color: #e5e7eb;
-      }
-      body[data-theme="dark"] .mission-card:hover {
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-        color: #fff;
-      }
-      body[data-theme="dark"] .organigramme {
-        background: linear-gradient(
-          180deg,
-          rgba(11, 18, 32, 0.65) 0%,
-          rgba(15, 23, 42, 0.65) 100%
-        );
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-      body[data-theme="dark"] .org-title {
-        color: #e5e7eb;
-        background: rgba(99, 102, 241, 0.12);
-        border-color: rgba(99, 102, 241, 0.25);
-      }
+      /* MODE SOMBRE */
+      body[data-theme="dark"] { --grad1: #0b1220; --grad2: #0f172a; --grad3: #0b1220; --grad4: #111827; color: #e5e7eb; }
+      body[data-theme="dark"] h2, body[data-theme="dark"] h3, body[data-theme="dark"] p, body[data-theme="dark"] li { color: #e5e7eb; }
+      body[data-theme="dark"] h2 { border-bottom-color: #334155; }
+      body[data-theme="dark"] a { color: #60a5fa; }
+      body[data-theme="dark"] a:hover { color: #93c5fd; }
+      body[data-theme="dark"] header { background: rgba(15,23,42,0.6); }
+      body[data-theme="dark"] nav { background: rgba(17,24,39,0.55); }
+      body[data-theme="dark"] nav > ul > li > a { background: rgba(31,41,55,0.65); color: #e5e7eb; }
+      body[data-theme="dark"] nav > ul > li:hover > a { background: #2563eb; }
+      body[data-theme="dark"] nav ul ul { background: rgba(31,41,55,0.9); }
+      body[data-theme="dark"] .welcome { background: linear-gradient(135deg, rgba(11,18,32,0.85), rgba(15,23,42,0.85)); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+      body[data-theme="dark"] .card { background: linear-gradient(135deg, rgba(16,24,39,0.85), rgba(15,23,42,0.85)); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+      body[data-theme="dark"] .mission-card { background: linear-gradient(135deg, rgba(30,58,138,0.85), rgba(30,64,175,0.85)); color: #e5e7eb; }
+      body[data-theme="dark"] .mission-card:hover { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff; }
+      body[data-theme="dark"] .organigramme { background: linear-gradient(180deg, rgba(11,18,32,0.65) 0%, rgba(15,23,42,0.65) 100%); box-shadow: 0 8px 28px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05); }
+      body[data-theme="dark"] .org-title { color: #e5e7eb; background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
 
-      /* =========================== MAP (Leaflet) =========================== */
-      .map-wrap {
-        margin-top: 1.25rem;
-      }
-      .map-title {
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 0.5rem;
-        font-size: 1rem;
-        opacity: 0.9;
-      }
-      #map-cf {
-        width: 100%;
-        height: 380px;
-        border-radius: 16px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-        overflow: hidden;
-      }
-      body[data-theme="dark"] .map-title {
-        color: #e5e7eb;
-      }
-      body[data-theme="dark"] #map-cf {
-        border-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
-      }
+      /* MAP */
+      .map-wrap { margin-top: 1.25rem; }
+      .map-title { font-weight: 700; color: #1f2937; margin-bottom: 0.5rem; font-size: 1rem; opacity: 0.9; }
+      #map-cf { width: 100%; height: 380px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.12); overflow: hidden; }
+      body[data-theme="dark"] .map-title { color: #e5e7eb; }
+      body[data-theme="dark"] #map-cf { border-color: rgba(255,255,255,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.55); }
 
-      /* ===== Veille : disposition légère ===== */
-      .veille-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .veille-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
-      @media (max-width: 900px) {
-        .veille-grid {
-          grid-template-columns: 1fr;
-        }
-      }
+      /* CERTIFICATIONS */
+      .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+      @media (max-width: 900px) { .cert-grid { grid-template-columns: 1fr; } }
+      .cert-title { margin: 0 0 0.4rem 0; }
+      .cert-desc { font-size: 0.88rem; color: #4b5563; margin: 0 0 0.8rem; line-height: 1.5; }
+      body[data-theme="dark"] .cert-desc { color: #9ca3af; }
+      .cert-score { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 700; color: #15803d; background: #dcfce7; border-radius: 20px; padding: 0.2rem 0.7rem; margin-bottom: 0.8rem; }
+      body[data-theme="dark"] .cert-score { background: rgba(20,83,45,0.4); color: #86efac; }
+      .cert-preview { width: 100%; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.12); background: rgba(255,255,255,0.55); }
+      body[data-theme="dark"] .cert-preview { border-color: rgba(255,255,255,0.08); box-shadow: 0 10px 24px rgba(0,0,0,0.55); background: rgba(15,23,42,0.35); }
+      .cert-preview object { width: 100%; height: 520px; border: none; border-radius: 12px; }
+      .cert-preview img { width: 100%; height: auto; display: block; }
 
-      /* ===== Certifications : grille ===== */
-      .cert-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-      @media (max-width: 900px) {
-        .cert-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .cert-title {
-        margin: 0 0 0.6rem 0;
-      }
-      .cert-preview {
-        width: 100%;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-        background: rgba(255, 255, 255, 0.55);
-      }
-      body[data-theme="dark"] .cert-preview {
-        border-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
-        background: rgba(15, 23, 42, 0.35);
-      }
-      .cert-preview object {
-        width: 100%;
-        height: 520px;
-        border: none;
-        border-radius: 12px;
-      }
-      .cert-preview img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
+      /* TABLEAU SYNTHESE AMELIORE */
+      .synthese-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 1rem; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+      .synthese-table thead tr { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; }
+      .synthese-table th { padding: 0.85rem 1rem; text-align: left; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.03em; }
+      .synthese-table tbody tr { background: rgba(255,255,255,0.75); transition: background 0.2s; }
+      .synthese-table tbody tr:nth-child(even) { background: rgba(239,246,255,0.75); }
+      .synthese-table tbody tr:hover { background: rgba(219,234,254,0.9); }
+      .synthese-table td { padding: 0.75rem 1rem; font-size: 0.9rem; color: #1f2937; border-bottom: 1px solid rgba(203,213,225,0.4); vertical-align: top; }
+      .synthese-table tbody tr:last-child td { border-bottom: none; }
+      .synthese-table td:first-child { font-weight: 700; color: #1e40af; }
+      body[data-theme="dark"] .synthese-table tbody tr { background: rgba(16,24,39,0.75); }
+      body[data-theme="dark"] .synthese-table tbody tr:nth-child(even) { background: rgba(15,23,42,0.75); }
+      body[data-theme="dark"] .synthese-table tbody tr:hover { background: rgba(30,58,138,0.4); }
+      body[data-theme="dark"] .synthese-table td { color: #e5e7eb; border-bottom-color: rgba(51,65,85,0.5); }
+      body[data-theme="dark"] .synthese-table td:first-child { color: #93c5fd; }
+
+      /* SOCIAL LINKS */
+      .social-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+      .social-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: transform 0.25s, box-shadow 0.25s; color: #fff; }
+      .social-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; color: #fff; }
+      .social-btn.linkedin { background: #0a66c2; }
+      .social-btn.email { background: #2563eb; }
+      .social-btn.cv { background: #1f2937; }
+      .social-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+      /* VEILLE */
+      .veille-header-band { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #60a5fa 100%); border-radius: 18px; padding: 2rem 2.2rem; margin-bottom: 1.8rem; color: #fff; position: relative; overflow: hidden; box-shadow: 0 8px 28px rgba(37,99,235,0.35); }
+      .veille-header-band::before { content: "🔐"; position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); font-size: 6rem; opacity: 0.12; }
+      .veille-header-band h3 { color: #fff; margin: 0 0 0.5rem; font-size: 1.4rem; }
+      .veille-header-band p { color: rgba(255,255,255,0.9); margin: 0; font-size: 1.05rem; }
+      .veille-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: start; }
+      @media (max-width: 860px) { .veille-layout { grid-template-columns: 1fr; } }
+      .veille-articles { display: flex; flex-direction: column; gap: 1rem; }
+      .veille-article { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,244,248,0.9)); border-radius: 16px; border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 1.2rem 1.4rem; transition: transform 0.3s, box-shadow 0.3s; backdrop-filter: blur(8px); position: relative; overflow: hidden; }
+      .veille-article:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
+      .veille-article-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.65rem; }
+      .veille-tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 6px; white-space: nowrap; }
+      .veille-tag.red { background: #fee2e2; color: #991b1b; } .veille-tag.blue { background: #dbeafe; color: #1e3a8a; } .veille-tag.purple { background: #ede9fe; color: #5b21b6; } .veille-tag.green { background: #dcfce7; color: #14532d; } .veille-tag.orange { background: #ffedd5; color: #9a3412; }
+      .veille-date { font-size: 0.78rem; color: #6b7280; margin-left: auto; }
+      .veille-article h4 { color: #1f2937; font-size: 1rem; margin: 0 0 0.4rem; font-weight: 700; }
+      .veille-article p { font-size: 0.93rem; color: #374151; margin: 0 0 0.6rem; line-height: 1.6; }
+      .veille-impact { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+      .veille-impact-item { font-size: 0.78rem; padding: 0.15rem 0.55rem; border-radius: 20px; background: rgba(59,130,246,0.1); color: #1e40af; border: 1px solid rgba(59,130,246,0.2); font-weight: 600; }
+      body[data-theme="dark"] .veille-impact-item { background: rgba(59,130,246,0.18); color: #93c5fd; border-color: rgba(96,165,250,0.3); }
+      .veille-source-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.82rem; font-weight: 600; color: #2563eb; text-decoration: none; margin-top: 0.4rem; transition: 0.2s; }
+      .veille-source-link:hover { color: #1d4ed8; text-decoration: underline; }
+      .veille-sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+      .veille-sidebar-card { background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,244,248,0.9)); border-radius: 16px; border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 1.2rem 1.4rem; backdrop-filter: blur(8px); }
+      .veille-sidebar-card h4 { font-size: 0.95rem; color: #1f2937; margin: 0 0 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
+      .veille-sources-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+      .veille-source-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0.7rem; border-radius: 10px; background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); text-decoration: none; transition: 0.25s; }
+      .veille-source-row:hover { background: rgba(37,99,235,0.08); transform: translateX(3px); text-decoration: none; }
+      .veille-source-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; font-weight: 700; color: #fff; }
+      .veille-source-name { font-size: 0.88rem; font-weight: 600; color: #1f2937; }
+      .veille-source-desc { font-size: 0.75rem; color: #6b7280; display: block; }
+      .veille-axes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+      .veille-axe { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: #374151; padding: 0.45rem 0.6rem; border-radius: 8px; background: rgba(255,255,255,0.5); }
+      .veille-axe-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 0.35rem; }
+      .veille-timeline { position: relative; padding-left: 1.5rem; }
+      .veille-timeline::before { content: ""; position: absolute; left: 0.35rem; top: 0.5rem; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2563eb, #60a5fa 70%, transparent); border-radius: 2px; }
+      .veille-tl-item { position: relative; margin-bottom: 1.1rem; }
+      .veille-tl-item::before { content: ""; position: absolute; left: -1.2rem; top: 0.45rem; width: 10px; height: 10px; border-radius: 50%; background: #2563eb; border: 2px solid #fff; box-shadow: 0 0 0 2px #2563eb; }
+      .veille-tl-date { font-size: 0.75rem; font-weight: 700; color: #2563eb; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+      .veille-tl-text { font-size: 0.88rem; color: #374151; line-height: 1.5; }
+      body[data-theme="dark"] .veille-article, body[data-theme="dark"] .veille-sidebar-card { background: linear-gradient(135deg, rgba(16,24,39,0.9), rgba(15,23,42,0.9)); border-color: rgba(255,255,255,0.08); }
+      body[data-theme="dark"] .veille-article h4 { color: #e5e7eb; }
+      body[data-theme="dark"] .veille-article p, body[data-theme="dark"] .veille-tl-text, body[data-theme="dark"] .veille-axe { color: #d1d5db; }
+      body[data-theme="dark"] .veille-sidebar-card h4 { color: #e5e7eb; }
+      body[data-theme="dark"] .veille-source-row { background: rgba(31,41,55,0.6); border-color: rgba(255,255,255,0.07); }
+      body[data-theme="dark"] .veille-source-name { color: #e5e7eb; }
+      body[data-theme="dark"] .veille-source-desc { color: #9ca3af; }
+      body[data-theme="dark"] .veille-axe { background: rgba(31,41,55,0.5); }
+      body[data-theme="dark"] .veille-tag.red { background: rgba(127,29,29,0.4); color: #fca5a5; }
+      body[data-theme="dark"] .veille-tag.blue { background: rgba(30,58,138,0.4); color: #93c5fd; }
+      body[data-theme="dark"] .veille-tag.purple { background: rgba(91,33,182,0.4); color: #c4b5fd; }
+      body[data-theme="dark"] .veille-tag.green { background: rgba(20,83,45,0.4); color: #86efac; }
+      body[data-theme="dark"] .veille-tag.orange { background: rgba(154,52,18,0.4); color: #fdba74; }
+      body[data-theme="dark"] .veille-tl-item::before { border-color: #1f2937; }
     </style>
   </head>
-
   <body>
-    <!-- CANVAS RÉSEAU -->
     <canvas id="bg-network" aria-hidden="true"></canvas>
-
-    <!-- Barre de progression -->
     <div class="progress-bar" id="progress"></div>
+    <div id="section-indicator">Section 1 / 9</div>
 
-    <!-- INTRO SCREEN -->
+    <!-- INTRO -->
     <div id="intro-screen" aria-hidden="true">
-      <!-- Logo DG bleu électrique -->
       <svg id="intro-logo" viewBox="0 0 128 128" aria-hidden="true">
         <defs>
-          <filter id="g" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient id="lg" x1="0" x2="1">
-            <stop offset="0" stop-color="#22aaff" />
-            <stop offset="1" stop-color="#60a5fa" />
-          </linearGradient>
+          <filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#22aaff"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
         </defs>
-        <rect rx="24" ry="24" width="128" height="128" fill="#000" />
-        <text
-          x="50%"
-          y="50%"
-          text-anchor="middle"
-          dominant-baseline="central"
-          font-family="Inter, system-ui, sans-serif"
-          font-weight="800"
-          font-size="76"
-          fill="url(#lg)"
-          filter="url(#g)"
-        >
-          DG
-        </text>
+        <rect rx="24" ry="24" width="128" height="128" fill="#000"/>
+        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="76" fill="url(#lg)" filter="url(#g)">DG</text>
       </svg>
-
       <div id="intro-content">Danis Gouedart</div>
-
       <div id="intro-actions">
         <button id="intro-skip" aria-label="Passer l'intro">Passer</button>
-        <button id="intro-disable" aria-label="Ne plus afficher l'intro">
-          Ne plus afficher l’intro
-        </button>
+        <button id="intro-disable" aria-label="Ne plus afficher l'intro">Ne plus afficher l'intro</button>
       </div>
     </div>
 
     <header>
       <div class="logo-wrap" aria-hidden="true">
-        <!-- Logo header -->
         <svg width="40" height="40" viewBox="0 0 128 128">
-          <defs>
-            <linearGradient id="lg2" x1="0" x2="1">
-              <stop offset="0" stop-color="#22aaff" />
-              <stop offset="1" stop-color="#60a5fa" />
-            </linearGradient>
-          </defs>
-          <rect rx="14" ry="14" width="128" height="128" fill="#000" />
-          <text
-            x="50%"
-            y="50%"
-            text-anchor="middle"
-            dominant-baseline="central"
-            font-family="Inter, system-ui, sans-serif"
-            font-weight="800"
-            font-size="70"
-            fill="url(#lg2)"
-          >
-            DG
-          </text>
+          <defs><linearGradient id="lg2" x1="0" x2="1"><stop offset="0" stop-color="#22aaff"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+          <rect rx="14" ry="14" width="128" height="128" fill="#000"/>
+          <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="70" fill="url(#lg2)">DG</text>
         </svg>
-
         <h1>Portfolio Danis Gouedart</h1>
       </div>
     </header>
@@ -1160,709 +391,319 @@
     <nav aria-label="Navigation principale" class="tap-bump">
       <ul>
         <li><a href="#" data-target="accueil">Accueil</a></li>
-
         <li>
           <a href="#" aria-haspopup="true">Présentation</a>
           <ul>
-            <li>
-              <a href="#" data-target="presentation_apprenti"
-                >Présentation de l’apprenti</a
-              >
-            </li>
-            <li>
-              <a href="#" data-target="presentation_entreprise"
-                >Présentation de l’entreprise</a
-              >
-            </li>
+            <li><a href="#" data-target="presentation_apprenti">Présentation de l'apprenti</a></li>
+            <li><a href="#" data-target="presentation_entreprise">Présentation de l'entreprise</a></li>
           </ul>
         </li>
-
         <li>
           <a href="#" aria-haspopup="true">Épreuve E5</a>
           <ul>
-            <li>
-              <a href="#" data-target="epreuveE5_synthese"
-                >Tableau de synthèse</a
-              >
-            </li>
-            <li>
-              <a href="#" data-target="epreuveE5_formation"
-                >Missions réalisées en formation</a
-              >
-            </li>
-            <li>
-              <a href="#" data-target="epreuveE5_entreprise"
-                >Missions réalisées en entreprise</a
-              >
-            </li>
-            <li>
-              <a href="#" data-target="epreuveE5_certifications"
-                >Certifications</a
-              >
-            </li>
+            <li><a href="#" data-target="epreuveE5_synthese">Tableau de synthèse</a></li>
+            <li><a href="#" data-target="epreuveE5_formation">Missions réalisées en formation</a></li>
+            <li><a href="#" data-target="epreuveE5_entreprise">Missions réalisées en entreprise</a></li>
+            <li><a href="#" data-target="epreuveE5_certifications">Certifications</a></li>
           </ul>
         </li>
-
         <li>
           <a href="#" aria-haspopup="true">Épreuve E6</a>
           <ul>
-            <li>
-              <a href="#" data-target="epreuveE6_situation"
-                >Situation professionnelle</a
-              >
-            </li>
-            <li>
-              <a href="#" data-target="epreuveE6_production"
-                >Production associée</a
-              >
-            </li>
+            <li><a href="#" data-target="epreuveE6_situation">Situation professionnelle</a></li>
+            <li><a href="#" data-target="epreuveE6_production">Production associée</a></li>
           </ul>
         </li>
-
         <li><a href="#" data-target="veille">Veille technologique</a></li>
       </ul>
-
       <div class="actions">
-        <button
-          id="presentation-mode"
-          class="btn"
-          aria-label="Mode Présentation Jury"
-        >
-          🎤 Présentation
-        </button>
-
-        <button
-          id="theme-toggle"
-          class="theme-toggle"
-          aria-label="Basculer le thème"
-        >
-          <div class="thumb">🌙</div>
-        </button>
+        <button id="presentation-mode" class="btn" aria-label="Mode Présentation Jury">🎤 Présentation</button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Basculer le thème"><div class="thumb">🌙</div></button>
       </div>
     </nav>
 
     <main id="main">
+
+      <!-- ACCUEIL -->
       <section id="accueil" class="active" aria-labelledby="accueil-title">
         <div class="welcome reveal" role="region" aria-label="Section d'accueil">
           <h2 id="accueil-title">Bienvenue</h2>
-          <p>
-            Bienvenue sur mon portfolio. Naviguez à travers les onglets ci-dessus
-            pour découvrir mon parcours, mes compétences et mes projets.
-          </p>
-
-          <div
-            class="welcome-links"
-            role="navigation"
-            aria-label="Liens rapides"
-          >
-            <a href="#" data-target="presentation_apprenti"
-              >Présentation apprenti</a
-            >
-            <a href="#" data-target="presentation_entreprise"
-              >Présentation entreprise</a
-            >
-            <a href="#" data-target="epreuveE5_synthese"
-              >Tableau de synthèse</a
-            >
-            <a href="#" data-target="epreuveE5_formation"
-              >Missions réalisées en formation</a
-            >
-            <a href="#" data-target="epreuveE5_entreprise"
-              >Missions réalisées en entreprise</a
-            >
+          <p>Bienvenue sur mon portfolio. Naviguez à travers les onglets ci-dessus pour découvrir mon parcours, mes compétences et mes projets.</p>
+          <div class="welcome-links" role="navigation" aria-label="Liens rapides">
+            <a href="#" data-target="presentation_apprenti">Présentation apprenti</a>
+            <a href="#" data-target="presentation_entreprise">Présentation entreprise</a>
+            <a href="#" data-target="epreuveE5_synthese">Tableau de synthèse</a>
+            <a href="#" data-target="epreuveE5_formation">Missions réalisées en formation</a>
+            <a href="#" data-target="epreuveE5_entreprise">Missions réalisées en entreprise</a>
           </div>
         </div>
       </section>
 
+      <!-- APPRENTI -->
       <section id="presentation_apprenti" aria-labelledby="apprenti-title">
-        <h2 id="apprenti-title">Présentation de l’apprenti</h2>
-
+        <h2 id="apprenti-title">Présentation de l'apprenti</h2>
         <div class="photo-container" aria-hidden="false">
-          <img
-            src="photo_danis.jpg"
-            alt="Photo de Danis Gouedart"
-            loading="lazy"
-          />
+          <img src="photo_danis.jpg" alt="Photo de Danis Gouedart" loading="lazy" />
         </div>
-
-        <p>
-          Je suis Danis Gouedart, étudiant en BTS SIO option SISR à Montsouris.
-          Passionné par les systèmes, réseaux et la cybersécurité.
-        </p>
-
+        <p>Je suis Danis Gouedart, étudiant en BTS SIO option SISR à Montsouris. Passionné par les systèmes, réseaux et la cybersécurité.</p>
         <h3>Mon parcours scolaire :</h3>
-        <p>
-          Baccalauréat professionnel Systèmes numériques option SISR obtenu en
-          2023, suivi du BTS SIO option SISR au CFA Campus Montsouris.
-        </p>
-
+        <p>Baccalauréat professionnel Systèmes numériques option SISR obtenu en 2023, suivi du BTS SIO option SISR au CFA Campus Montsouris.</p>
         <h3>Mon parcours professionnel :</h3>
-        <p>
-          Alternant à la Comédie-Française au sein de la DSI, où j’assure
-          l’installation, la maintenance et la sécurité des systèmes
-          informatiques.
-        </p>
+        <p>Alternant à la Comédie-Française au sein de la DSI, où j'assure l'installation, la maintenance et la sécurité des systèmes informatiques.</p>
 
-        <div class="competences">
+        <!-- BARRES DE COMPETENCES -->
+        <div class="skills-section">
           <h3>Compétences informatiques :</h3>
-          <ul>
-            <li>
-              Administration système (Windows Server 2022, Active Directory)
-            </li>
-            <li>
-              Administration Microsoft 365 (utilisateurs, boîtes mail, groupes,
-              etc.)
-            </li>
-            <li>Réseaux et configuration DHCP, DNS, routage</li>
-            <li>Sécurité informatique (pare-feu, sauvegarde, audit)</li>
-            <li>Virtualisation (VirtualBox, Proxmox, VMware)</li>
-          </ul>
+          <div class="skills-grid" id="skills-grid">
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Administration système (Windows Server, AD)</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Microsoft 365 & Entra ID</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Réseaux (DHCP, DNS, VLAN, routage)</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="75"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Sécurité informatique & audit</span><span class="skill-pct">70%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="70"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Virtualisation (Proxmox, VMware, VirtualBox)</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="75"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-label"><span class="skill-name">Support & helpdesk utilisateurs</span><span class="skill-pct">90%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="90"></div></div>
+            </div>
+          </div>
+          <div class="skill-badges">
+            <span class="skill-badge">🐧 Linux / Debian</span>
+            <span class="skill-badge">🪟 Windows Server 2022</span>
+            <span class="skill-badge">🔐 Active Directory</span>
+            <span class="skill-badge">☁️ Microsoft 365</span>
+            <span class="skill-badge">📡 Wireshark</span>
+            <span class="skill-badge">🖥️ Proxmox</span>
+            <span class="skill-badge">🛡️ GLPI</span>
+            <span class="skill-badge">🔑 KeePass</span>
+          </div>
         </div>
 
         <h3>Contact :</h3>
-        <p>
-          Email : danis.gouedart@gmail.com<br />Téléphone : 07 68 56 40 00
-        </p>
-
-        <p>
-          <a
-            href="https://1drv.ms/b/c/3c089fa1bf123036/EcVjais7IoNOmCaSWsIxfMUBmC3raWLkOnXTnz_uZcBzjQ?e=RO0rUr"
-            target="_blank"
-            >Voir mon CV (PDF)</a
-          >
-        </p>
-        <p>
-          <a
-            href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile"
-            target="_blank"
-            >Voir mon profil LinkedIn</a
-          >
-        </p>
+        <p>Email : danis.gouedart@gmail.com<br />Téléphone : 07 68 56 40 00</p>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile" target="_blank" class="social-btn linkedin" rel="noopener" aria-label="Voir mon profil LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="mailto:danis.gouedart@gmail.com" class="social-btn email" aria-label="Envoyer un email">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Email
+          </a>
+          <a href="https://1drv.ms/b/c/3c089fa1bf123036/EcVjais7IoNOmCaSWsIxfMUBmC3raWLkOnXTnz_uZcBzjQ?e=RO0rUr" target="_blank" class="social-btn cv" rel="noopener" aria-label="Voir mon CV PDF">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            Mon CV (PDF)
+          </a>
+        </div>
       </section>
 
+      <!-- ENTREPRISE -->
       <section id="presentation_entreprise" aria-labelledby="entreprise-title">
-        <h2 id="entreprise-title">Présentation de l’entreprise</h2>
-
-        <p>
-          La Comédie-Française, fondée en 1680, est l’une des plus anciennes
-          institutions culturelles de France, située au cœur de Paris, dans le
-          1er arrondissement. Elle joue un rôle majeur dans la diffusion du
-          théâtre classique et contemporain.
-        </p>
-
+        <h2 id="entreprise-title">Présentation de l'entreprise</h2>
+        <p>La Comédie-Française, fondée en 1680, est l'une des plus anciennes institutions culturelles de France, située au cœur de Paris, dans le 1er arrondissement. Elle joue un rôle majeur dans la diffusion du théâtre classique et contemporain.</p>
         <h3>Chiffres clés :</h3>
         <ul>
           <li>Plus de 400 employés (administration, technique et artistique)</li>
-          <li>Chiffre d’affaires annuel : environ 60 millions d’euros</li>
+          <li>Chiffre d'affaires annuel : environ 60 millions d'euros</li>
           <li>Plus de 250 représentations par an</li>
-          <li>
-            Rayonnement national et international avec tournées et partenariats
-          </li>
+          <li>Rayonnement national et international avec tournées et partenariats</li>
         </ul>
-
         <h3>Structure et missions :</h3>
-        <p>
-          La DSI assure la sécurité, la maintenance, le déploiement et
-          l’innovation des systèmes informatiques. Les alternants participent à
-          des projets réels et aux opérations de sécurisation du réseau et des
-          données.
-        </p>
-
+        <p>La DSI assure la sécurité, la maintenance, le déploiement et l'innovation des systèmes informatiques. Les alternants participent à des projets réels et aux opérations de sécurisation du réseau et des données.</p>
         <h3>Missions de la DSI et outils utilisés :</h3>
         <ul>
-          <li>
-            <strong>Support aux utilisateurs et helpdesk :</strong> prise en
-            charge des incidents, demandes de services, installation de
-            logiciels, assistance à distance et accompagnement au quotidien.
-            <em
-              >Outils : suite Microsoft 365, prise en main à distance (AnyDesk),
-              messagerie Outlook, téléphone IP.</em
-            >
-          </li>
-          <li>
-            <strong>Gestion du parc informatique :</strong> inventaire et suivi
-            des postes, imprimantes, smartphones, tablettes, écrans et
-            périphériques, gestion des licences logicielles et renouvellements.
-            <em
-              >Outils : application Power Apps (gestion de parc), Microsoft Entra
-              ID, Active Directory, tableurs de suivi.</em
-            >
-          </li>
-          <li>
-            <strong>Administration systèmes :</strong> création et gestion des
-            comptes, groupes et droits d’accès, gestion des serveurs de fichiers,
-            d’impression et d’applications.
-            <em
-              >Outils : Windows Server, Active Directory, GPMC (stratégies de
-              groupe), services de fichiers, gestion des impressions, consoles
-              d’administration Microsoft.</em
-            >
-          </li>
-          <li>
-            <strong>Administration réseau :</strong> configuration des
-            commutateurs, routeurs et bornes Wi-Fi, gestion des VLAN, supervision
-            de la connectivité entre les sites et des liaisons Internet.
-            <em
-              >Outils : consoles d’administration des équipements réseau (Extreme
-              Networks), Wireshark, outils de supervision réseau (Zabbix),
-              portails Wi-Fi.</em
-            >
-          </li>
-          <li>
-            <strong>Sécurité et protection des données :</strong> mise en place
-            des politiques de sécurité, filtrage, mises à jour, contrôle des
-            accès, durcissement des postes et serveurs.
-            <em
-              >Outils : pare-feu/UTM, antivirus/EDR, solutions de chiffrement,
-              filtrage web, gestionnaire de mots de passe, journaux d’événements
-              Windows, outils d’audit.</em
-            >
-          </li>
-          <li>
-            <strong>Sauvegarde, continuité d’activité et restauration :</strong>
-            planification des sauvegardes des serveurs et données critiques,
-            tests de restauration, suivi de la capacité de stockage.
-            <em>Outils : NAS.</em>
-          </li>
-          <li>
-            <strong>Projets d’infrastructure et évolution du SI :</strong>
-            déploiement de nouveaux services (virtualisation, mise à jour d’OS,
-            migration de fichiers, intégration d’applications métiers),
-            documentation et procédures.
-            <em
-              >Outils : plateformes de virtualisation (VMware), éditeurs de
-              documentation (Word, Draw.io).</em
-            >
-          </li>
-          <li>
-            <strong>Sensibilisation et formation des utilisateurs :</strong>
-            ateliers, guides et procédures pour les bonnes pratiques de sécurité,
-            l’usage de OneDrive, de la messagerie, des outils collaboratifs et
-            des VPN.
-            <em
-              >Outils : présentations PowerPoint, supports PDF, intranet
-              d’entreprise, outils de webconférence (Teams).</em
-            >
-          </li>
+          <li><strong>Support aux utilisateurs et helpdesk :</strong> prise en charge des incidents, demandes de services, installation de logiciels, assistance à distance et accompagnement au quotidien. <em>Outils : suite Microsoft 365, prise en main à distance (AnyDesk), messagerie Outlook, téléphone IP.</em></li>
+          <li><strong>Gestion du parc informatique :</strong> inventaire et suivi des postes, imprimantes, smartphones, tablettes, écrans et périphériques, gestion des licences logicielles et renouvellements. <em>Outils : application Power Apps (gestion de parc), Microsoft Entra ID, Active Directory, tableurs de suivi.</em></li>
+          <li><strong>Administration systèmes :</strong> création et gestion des comptes, groupes et droits d'accès, gestion des serveurs de fichiers, d'impression et d'applications. <em>Outils : Windows Server, Active Directory, GPMC (stratégies de groupe), services de fichiers, gestion des impressions, consoles d'administration Microsoft.</em></li>
+          <li><strong>Administration réseau :</strong> configuration des commutateurs, routeurs et bornes Wi-Fi, gestion des VLAN, supervision de la connectivité entre les sites et des liaisons Internet. <em>Outils : consoles d'administration des équipements réseau (Extreme Networks), Wireshark, outils de supervision réseau (Zabbix), portails Wi-Fi.</em></li>
+          <li><strong>Sécurité et protection des données :</strong> mise en place des politiques de sécurité, filtrage, mises à jour, contrôle des accès, durcissement des postes et serveurs. <em>Outils : pare-feu/UTM, antivirus/EDR, solutions de chiffrement, filtrage web, gestionnaire de mots de passe, journaux d'événements Windows, outils d'audit.</em></li>
+          <li><strong>Sauvegarde, continuité d'activité et restauration :</strong> planification des sauvegardes des serveurs et données critiques, tests de restauration, suivi de la capacité de stockage. <em>Outils : NAS.</em></li>
+          <li><strong>Projets d'infrastructure et évolution du SI :</strong> déploiement de nouveaux services (virtualisation, mise à jour d'OS, migration de fichiers, intégration d'applications métiers), documentation et procédures. <em>Outils : plateformes de virtualisation (VMware), éditeurs de documentation (Word, Draw.io).</em></li>
+          <li><strong>Sensibilisation et formation des utilisateurs :</strong> ateliers, guides et procédures pour les bonnes pratiques de sécurité, l'usage de OneDrive, de la messagerie, des outils collaboratifs et des VPN. <em>Outils : présentations PowerPoint, supports PDF, intranet d'entreprise, outils de webconférence (Teams).</em></li>
         </ul>
-
-        <!-- Organigramme mis à jour -->
         <div class="organigramme" aria-hidden="false">
-          <div class="org-level">
-            <div class="org-card" data-level="1">
-              <strong>Marc Le Bihan</strong><br />Directeur DSI
-            </div>
-          </div>
-
-          <div class="org-level">
-            <div class="org-card" data-level="2">
-              <strong>Fabien Laverdat</strong><br />Adjoint DSI – Réseau &
-              Sécurité
-            </div>
-          </div>
-
+          <div class="org-level"><div class="org-card" data-level="1"><strong>Marc Le Bihan</strong><br />Directeur DSI</div></div>
+          <div class="org-level"><div class="org-card" data-level="2"><strong>Fabien Laverdat</strong><br />Adjoint DSI – Réseau & Sécurité</div></div>
           <div class="org-level">
             <div class="org-row">
-              <div class="org-card" data-level="3">
-                <strong>Étienne Chevalier</strong><br />Admin Système
-              </div>
-              <div class="org-card" data-level="3">
-                <strong>Michaël Djossou</strong><br />Admin Système
-              </div>
-              <div class="org-card" data-level="3">
-                <strong>Tania Nino</strong><br />Administratrice Parc
-                Informatique<br /><small
-                  >Responsable Santé des Données</small
-                >
-              </div>
+              <div class="org-card" data-level="3"><strong>Étienne Chevalier</strong><br />Admin Système</div>
+              <div class="org-card" data-level="3"><strong>Michaël Djossou</strong><br />Admin Système</div>
+              <div class="org-card" data-level="3"><strong>Tania Nino</strong><br />Administratrice Parc Informatique<br /><small>Responsable Santé des Données</small></div>
             </div>
           </div>
-
           <div class="org-level">
-            <div class="org-title">
-              Alternant Technicien IT • Direction des Systèmes d'Information
-            </div>
+            <div class="org-title">Alternant Technicien IT • Direction des Systèmes d'Information</div>
             <div class="org-row">
-              <div class="org-card alt me" data-level="4">
-                <strong>Danis Gouedart</strong><br />Alternant Systèmes & Réseaux
-              </div>
-              <div class="org-card alt" data-level="4">
-                <strong>Raphaël Lobo</strong><br />Alternant Systèmes & Réseaux
-              </div>
+              <div class="org-card alt me" data-level="4"><strong>Danis Gouedart</strong><br />Alternant Systèmes & Réseaux</div>
+              <div class="org-card alt" data-level="4"><strong>Raphaël Lobo</strong><br />Alternant Systèmes & Réseaux</div>
             </div>
           </div>
         </div>
-
-        <!-- Localisation (carte claire) -->
         <div class="map-wrap">
           <div class="map-title">Localisation — Comédie-Française (carte)</div>
-          <div
-            id="map-cf"
-            role="region"
-            aria-label="Carte de localisation de la Comédie-Française"
-          ></div>
+          <div id="map-cf" role="region" aria-label="Carte de localisation de la Comédie-Française"></div>
         </div>
       </section>
 
+      <!-- E5 SYNTHESE -->
       <section id="epreuveE5_synthese" aria-labelledby="e5s-title">
         <h2 id="e5s-title">Épreuve E5 – Tableau de synthèse</h2>
-
         <p>Tableau de synthèse des activités et compétences développées :</p>
-
-        <table
-          border="1"
-          style="
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            margin-top: 1rem;
-          "
-        >
-          <tr style="background: #2563eb; color: #fff">
-            <th>Activité</th>
-            <th>Description</th>
-            <th>Compétences mobilisées</th>
-            <th>Outils utilisés</th>
-          </tr>
-          <tr>
-            <td>Installation NAS</td>
-            <td>Installation et configuration complète de OpenMediaVault</td>
-            <td>Gestion stockage, permissions, sauvegardes</td>
-            <td>OpenMediaVault, Iperius Backup</td>
-          </tr>
-          <tr>
-            <td>Configuration DHCP</td>
-            <td>Mise en place du service DHCP et tests réseau</td>
-            <td>Réseaux, IP statiques et dynamiques, routage</td>
-            <td>Windows Server, Wireshark</td>
-          </tr>
-          <tr>
-            <td>Sauvegarde & restauration</td>
-            <td>
-              Déploiement de procédures de sauvegarde et restauration avec Iperius
-              Backup
-            </td>
-            <td>Sécurité, administration, audit</td>
-            <td>Iperius Backup</td>
-          </tr>
-          <tr>
-            <td>Gestion Active Directory</td>
-            <td>Création de comptes, groupes et gestion des droits</td>
-            <td>Administration Windows, sécurité</td>
-            <td>Windows Server, Active Directory</td>
-          </tr>
-          <tr>
-            <td>Sécurité parc informatique</td>
-            <td>Audit, mise à jour, sécurisation et surveillance réseau</td>
-            <td>Sécurité informatique, supervision</td>
-            <td>Wireshark, antivirus, pare-feu</td>
-          </tr>
+        <table class="synthese-table">
+          <thead>
+            <tr><th>Activité</th><th>Description</th><th>Compétences mobilisées</th><th>Outils utilisés</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Installation NAS</td><td>Installation et configuration complète de OpenMediaVault</td><td>Gestion stockage, permissions, sauvegardes</td><td>OpenMediaVault, Iperius Backup</td></tr>
+            <tr><td>Configuration DHCP</td><td>Mise en place du service DHCP et tests réseau</td><td>Réseaux, IP statiques et dynamiques, routage</td><td>Windows Server, Wireshark</td></tr>
+            <tr><td>Sauvegarde & restauration</td><td>Déploiement de procédures de sauvegarde et restauration avec Iperius Backup</td><td>Sécurité, administration, audit</td><td>Iperius Backup</td></tr>
+            <tr><td>Gestion Active Directory</td><td>Création de comptes, groupes et gestion des droits</td><td>Administration Windows, sécurité</td><td>Windows Server, Active Directory</td></tr>
+            <tr><td>Sécurité parc informatique</td><td>Audit, mise à jour, sécurisation et surveillance réseau</td><td>Sécurité informatique, supervision</td><td>Wireshark, antivirus, pare-feu</td></tr>
+          </tbody>
         </table>
-
-        <!-- Lien Excel du tableau de synthèse -->
         <div class="downloads">
           <h4>📎 Téléchargements</h4>
           <ul>
-            <li>
-              <a
-                href="https://1drv.ms/b/c/3c089fa1bf123036/IQDSXwro1vf_RIPWf8sO4Vu-AUKLOyn4wN7_XE_0NitvGiw?e=TXJKxL.pdf"
-                target="_blank"
-                rel="noopener"
-                style="display: block; margin-top: 6px; font-weight: 600"
-              >
-                Ouvrir le tableau de synthèse (PDF)
-              </a>
-            </li>
+            <li><a href="https://1drv.ms/b/c/3c089fa1bf123036/IQDSXwro1vf_RIPWf8sO4Vu-AUKLOyn4wN7_XE_0NitvGiw?e=TXJKxL.pdf" target="_blank" rel="noopener" style="display:block;margin-top:6px;font-weight:600;">Ouvrir le tableau de synthèse (PDF)</a></li>
           </ul>
         </div>
       </section>
 
+      <!-- E5 FORMATION -->
       <section id="epreuveE5_formation" aria-labelledby="e5f-title">
         <h2 id="e5f-title">Missions réalisées en formation</h2>
-
         <div class="mission-section">
-          <a
-            href="MF01.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Découverte et présentation des réseaux sans-fil Wi-Fi / Bluetooth
-              <small>MF 01</small>
-            </span>
+          <a href="MF01.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">📡</div>
+            <span>Découverte et présentation des réseaux sans-fil Wi-Fi / Bluetooth<small>MF 01 — Étude des standards IEEE 802.11 et Bluetooth, portées, fréquences et cas d'usage en entreprise</small></span>
           </a>
-
-          <a
-            href="MF02.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Étude et mise en œuvre des protocoles ICMP et ARP
-              <small>MF 02</small>
-            </span>
+          <a href="MF02.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🔍</div>
+            <span>Étude et mise en œuvre des protocoles ICMP et ARP<small>MF 02 — Analyse des trames réseau avec Wireshark, diagnostic de connectivité et résolution d'adresses MAC</small></span>
           </a>
-
-          <a
-            href="MF03.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Utilisation du gestionnaire de disques et gestion du stockage
-              <small>MF 03</small>
-            </span>
+          <a href="MF03.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">💾</div>
+            <span>Utilisation du gestionnaire de disques et gestion du stockage<small>MF 03 — Partitionnement, formatage, gestion des volumes et des lecteurs sous Windows</small></span>
           </a>
-
-          <a
-            href="MF04.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Configuration complète d’un service DHCP
-              <small>MF 04</small>
-            </span>
+          <a href="MF04.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🌐</div>
+            <span>Configuration complète d'un service DHCP<small>MF 04 — Installation et paramétrage du rôle DHCP sur Windows Server, plages d'adresses, exclusions et options</small></span>
           </a>
-
-          <a
-            href="MF05.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Mise en place et tests d’un atelier ACL (contrôle d’accès)
-              <small>MF 05</small>
-            </span>
+          <a href="MF05.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🔒</div>
+            <span>Mise en place et tests d'un atelier ACL (contrôle d'accès)<small>MF 05 — Configuration des listes de contrôle d'accès sur équipements réseau pour filtrer les flux</small></span>
           </a>
-
-          <a
-            href="MF06.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>
-              Mise en place d’un serveur GLPI (outil de ticketing et gestion de parc)
-              <small>MF 06</small>
-            </span>
+          <a href="MF06.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🎫</div>
+            <span>Mise en place d'un serveur GLPI (outil de ticketing et gestion de parc)<small>MF 06 — Déploiement de GLPI sur Debian, configuration du helpdesk, des entités et des profils utilisateurs</small></span>
           </a>
-
-          <a
-            href="MF07.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Installation web (MF 07)"
-          >
-            <span>
-              Installation web
-              <small>MF 07</small>
-            </span>
+          <a href="MF07.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🖥️</div>
+            <span>Installation d'un serveur web Apache sous Linux<small>MF 07 — Installation et configuration d'Apache2, création de virtual hosts, gestion des droits et des modules</small></span>
           </a>
-
-          <a
-            href="MF08.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Déploiement site (MF 08)"
-          >
-            <span>
-              Déploiement site
-              <small>MF 08</small>
-            </span>
+          <a href="MF08.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🚀</div>
+            <span>Déploiement et mise en ligne d'un site web<small>MF 08 — Publication d'un site sur serveur web, configuration DNS, tests de disponibilité et sécurisation basique</small></span>
           </a>
         </div>
       </section>
 
+      <!-- E5 ENTREPRISE -->
       <section id="epreuveE5_entreprise" aria-labelledby="e5e-title">
         <h2 id="e5e-title">Missions réalisées en entreprise</h2>
-
         <div class="mission-section">
-          <a
-            href="ME01.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Installation et configuration de matériel informatique (PC, imprimantes, écrans)"
-          >
-            <span>
-              Installation et configuration de matériel informatique (PC,
-              imprimantes, écrans)
-              <small>ME 01</small>
-            </span>
+          <a href="ME01.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🖨️</div>
+            <span>Installation et configuration de matériel informatique (PC, imprimantes, écrans)<small>ME 01 — Déploiement et mise en service de postes de travail, configuration des imprimantes réseau et paramétrage des périphériques</small></span>
           </a>
-
-          <a
-            href="ME02.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Gestion des comptes utilisateurs (Active Directory)"
-          >
-            <span>
-              Gestion des comptes utilisateurs dans Active Directory
-              <small>ME 02</small>
-            </span>
+          <a href="ME02.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">👤</div>
+            <span>Gestion des comptes utilisateurs dans Active Directory<small>ME 02 — Création, modification et suppression de comptes, gestion des groupes, des UO et des droits d'accès</small></span>
           </a>
-
-          <a
-            href="ME03.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Formation des utilisateurs aux outils (OneDrive, KeePass, outils internes)"
-          >
-            <span>
-              Formation des utilisateurs aux outils informatiques (OneDrive,
-              KeePass, outils internes)
-              <small>ME 03</small>
-            </span>
+          <a href="ME03.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🎓</div>
+            <span>Formation des utilisateurs aux outils informatiques (OneDrive, KeePass, outils internes)<small>ME 03 — Ateliers de sensibilisation et d'accompagnement des collaborateurs à l'utilisation des outils collaboratifs et de sécurité</small></span>
           </a>
-
-          <a
-            href="ME04.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Gestion du parc informatique (inventaire, suivi, licences)"
-          >
-            <span>
-              Gestion du parc informatique et des licences logicielles
-              <small>ME 04</small>
-            </span>
+          <a href="ME04.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">📋</div>
+            <span>Gestion du parc informatique et des licences logicielles<small>ME 04 — Inventaire, suivi et mise à jour du parc via Power Apps, gestion des renouvellements de licences</small></span>
           </a>
-
-          <a
-            href="ME05.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Rédaction d’une procédure pour les utilisateurs en télétravail et en mobilité"
-          >
-            <span>
-              Rédaction de procédures pour les utilisateurs en télétravail et en
-              mobilité
-              <small>ME 05</small>
-            </span>
+          <a href="ME05.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">📝</div>
+            <span>Rédaction de procédures pour les utilisateurs en télétravail et en mobilité<small>ME 05 — Création de guides pratiques (VPN, accès distants, sécurité) à destination des collaborateurs en déplacement</small></span>
           </a>
-
-          <a
-            href="ME06.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Résolution d’un problème de réseau général"
-          >
-            <span>
-              Résolution d’incidents réseau et support informatique
-              <small>ME 06</small>
-            </span>
+          <a href="ME06.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🔧</div>
+            <span>Résolution d'incidents réseau et support informatique<small>ME 06 — Diagnostic et résolution de pannes réseau, analyse des logs, intervention sur équipements et suivi des tickets</small></span>
           </a>
-
-          <a
-            href="ME07.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Intégration et configuration d’outils de téléphonie mobile (iOS / Android)"
-          >
-            <span>
-              Intégration et configuration d’outils de téléphonie mobile (iOS et
-              Android)
-              <small>ME 07</small>
-            </span>
+          <a href="ME07.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">📱</div>
+            <span>Intégration et configuration d'outils de téléphonie mobile (iOS et Android)<small>ME 07 — Enrôlement des appareils mobiles, configuration des profils, déploiement des applications métiers et sécurisation</small></span>
           </a>
-
-          <a
-            href="ME08.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Participation active aux instances de pilotage Microsoft"
-          >
-            <span>
-              Participation active aux instances de pilotage Microsoft pour
-              l’optimisation continue de l’environnement
-              <small>ME 08</small>
-            </span>
+          <a href="ME08.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">☁️</div>
+            <span>Participation active aux instances de pilotage Microsoft pour l'optimisation continue de l'environnement<small>ME 08 — Suivi des recommandations Microsoft 365, analyse des rapports d'utilisation, optimisation des licences et services cloud</small></span>
           </a>
-
-          <a
-            href="ME09.pdf"
-            class="mission-card tap-bump"
-            target="_blank"
-            rel="noopener"
-            title="Vérification et gestion des droits d’accès sur un serveur de fichiers (NAS)"
-          >
-            <span>
-              Vérification et gestion des droits d’accès sur un serveur de
-              fichiers (NAS)
-              <small>ME 09</small>
-            </span>
+          <a href="ME09.pdf" class="mission-card tap-bump" target="_blank" rel="noopener">
+            <div class="mission-icon">🗂️</div>
+            <span>Vérification et gestion des droits d'accès sur un serveur de fichiers (NAS)<small>ME 09 — Audit des permissions NTFS/SMB, correction des droits inadaptés, organisation des partages et documentation</small></span>
           </a>
         </div>
       </section>
 
+      <!-- E5 CERTIFICATIONS -->
       <section id="epreuveE5_certifications" aria-labelledby="e5c-title">
         <h2 id="e5c-title">Certifications obtenues</h2>
-
         <div class="cert-grid">
           <div class="card">
-            <h3 class="cert-title">CNIL – MOOC RGPD (Attestation)</h3>
-            <a
-              href="https://1drv.ms/i/c/3c089fa1bf123036/IQDbnbQJXXB2TbqGTsG2wY5AAbf2_gea5ppv2eg5dw--8VQ?e=M6DhZi"
-              target="_blank"
-              rel="noopener"
-              class="cert-preview"
-              aria-label="Ouvrir la certification CNIL – MOOC RGPD"
-            >
-              <img
-                src="Certifica_RGPD.png"
-                alt="Certification CNIL – MOOC RGPD"
-                loading="lazy"
-              />
+            <h3 class="cert-title">CNIL – MOOC RGPD (Attestation générale)</h3>
+            <p class="cert-desc">Formation en ligne délivrée par la CNIL portant sur les fondamentaux du Règlement Général sur la Protection des Données (RGPD) : droits des personnes, obligations des organisations, rôle du DPO et mise en conformité. Essentielle pour tout professionnel IT gérant des données personnelles.</p>
+            <a href="https://1drv.ms/i/c/3c089fa1bf123036/IQDbnbQJXXB2TbqGTsG2wY5AAbf2_gea5ppv2eg5dw--8VQ?e=M6DhZi" target="_blank" rel="noopener" class="cert-preview" aria-label="Ouvrir la certification CNIL – MOOC RGPD">
+              <img src="Certifica_RGPD.png" alt="Certification CNIL – MOOC RGPD" loading="lazy" />
             </a>
           </div>
-
           <div class="card">
-            <h3 class="cert-title">
-              CNIL – MOOC RGPD : Module 2 – Les principes de la protection des
-              données
-            </h3>
-
+            <h3 class="cert-title">CNIL – Module 2 : Les principes de la protection des données</h3>
+            <p class="cert-desc">Module dédié aux grands principes du RGPD : licéité du traitement, minimisation des données, durées de conservation, droits des personnes et obligations de sécurité. Apporte une vision concrète des responsabilités des acteurs informatiques.</p>
             <div class="cert-preview" aria-label="Aperçu image Module 2">
-              <img
-                src="Attestation_de_suivi_page-0001.png"
-                alt="Attestation CNIL – Module 2 – Les principes de la protection des données"
-                loading="lazy"
-              />
+              <img src="Attestation_de_suivi_page-0001.png" alt="Attestation CNIL – Module 2 – Les principes de la protection des données" loading="lazy" />
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="cert-title">CNIL – Module 3 : Les responsabilités des acteurs</h3>
+            <p class="cert-desc">Module centré sur les responsabilités des différents acteurs du traitement des données : responsable de traitement, sous-traitant, DPO. Aborde les notions de registre des activités, d'analyse d'impact (DPIA) et de gestion des violations de données. Score obtenu : <strong>86 %</strong>.</p>
+            <span class="cert-score">✅ Score : 86 % — 16 mars 2026</span>
+            <div class="cert-preview" aria-label="Aperçu Attestation Module 3">
+              <img src="Certificat3_.pdf" alt="Attestation CNIL – Module 3 – Les responsabilités des acteurs" loading="lazy" style="display:none;" />
+              <!-- Affichage via object pour PDF -->
+              <object data="Certificat3_.pdf" type="application/pdf" style="width:100%;height:420px;border:none;border-radius:12px;">
+                <p style="padding:1rem;color:#6b7280;font-size:0.9rem;">Aperçu non disponible — <a href="Certificat3_.pdf" target="_blank">Ouvrir le PDF</a></p>
+              </object>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- E6 SITUATION -->
       <section id="epreuveE6_situation" aria-labelledby="e6s-title">
         <h2 id="e6s-title">Épreuve E6 – Situation professionnelle</h2>
-
         <h3>1. Contexte</h3>
-        <p>
-          Dans le cadre de ma formation en BTS SIO option SISR, j’ai réalisé le projet BELLETABLE.
-          L’objectif était de concevoir et déployer une solution complète de gestion de parc informatique
-          permettant le suivi du matériel, des utilisateurs, des tickets d’incidents et des consommables.
-        </p>
-        <p>
-          Le projet a été réalisé dans un environnement virtualisé via Proxmox.
-          Une machine virtuelle Debian 12 a été déployée afin d’héberger GLPI, outil open-source de gestion de parc informatique.
-        </p>
+        <p>Dans le cadre de ma formation en BTS SIO option SISR, j'ai réalisé le projet BELLETABLE. L'objectif était de concevoir et déployer une solution complète de gestion de parc informatique permettant le suivi du matériel, des utilisateurs, des tickets d'incidents et des consommables.</p>
+        <p>Le projet a été réalisé dans un environnement virtualisé via Proxmox. Une machine virtuelle Debian 12 a été déployée afin d'héberger GLPI, outil open-source de gestion de parc informatique.</p>
         <p>Cette situation a été réalisé avec Yohan DO-CAO.</p>
-
         <h3>2. Architecture technique mise en place</h3>
         <ul>
           <li><strong>Hyperviseur :</strong> Proxmox VE</li>
@@ -1873,7 +714,6 @@
           <li><strong>Application :</strong> GLPI</li>
           <li><strong>Authentification :</strong> LDAP</li>
         </ul>
-
         <h3>3. Installation et configuration</h3>
         <ul>
           <li>Installation Apache : <code>apt install apache2</code></li>
@@ -1883,12 +723,8 @@
           <li>Configuration droits SQL</li>
           <li>Déploiement GLPI dans <code>/var/www/html</code></li>
         </ul>
-
         <h3>4. Configuration LDAP</h3>
-        <p>
-          Mise en place de l’authentification centralisée via LDAP. Un problème de bind a été identifié puis corrigé après analyse des paramètres DN et identifiants.
-        </p>
-
+        <p>Mise en place de l'authentification centralisée via LDAP. Un problème de bind a été identifié puis corrigé après analyse des paramètres DN et identifiants.</p>
         <h3>5. Gestion des profils</h3>
         <ul>
           <li>Administrateur</li>
@@ -1896,7 +732,6 @@
           <li>Utilisateur</li>
           <li>Observateur</li>
         </ul>
-
         <h3>6. Résultats</h3>
         <ul>
           <li>GLPI opérationnel</li>
@@ -1904,25 +739,18 @@
           <li>Système de tickets validé</li>
           <li>Gestion complète du parc</li>
         </ul>
-
         <h3>7. Analyse personnelle</h3>
-        <p>
-          Ce projet m’a permis de consolider mes compétences en administration système, virtualisation et gestion d’infrastructure.
-        </p>
+        <p>Ce projet m'a permis de consolider mes compétences en administration système, virtualisation et gestion d'infrastructure.</p>
       </section>
 
+      <!-- E6 PRODUCTION -->
       <section id="epreuveE6_production" aria-labelledby="e6p-title">
         <h2 id="e6p-title">Production – Projet BELLETABLE</h2>
-
         <h3>1. Présentation de la production</h3>
-        <p>
-          La production réalisée dans le cadre du projet BELLETABLE consiste au déploiement complet d’une solution de gestion de parc informatique basée sur GLPI.
-          L’objectif était de fournir une infrastructure fonctionnelle, sécurisée et administrable.
-        </p>
-
+        <p>La production réalisée dans le cadre du projet BELLETABLE consiste au déploiement complet d'une solution de gestion de parc informatique basée sur GLPI. L'objectif était de fournir une infrastructure fonctionnelle, sécurisée et administrable.</p>
         <h3>2. Infrastructure mise en place</h3>
         <ul>
-          <li>Création d’une machine virtuelle sous Proxmox</li>
+          <li>Création d'une machine virtuelle sous Proxmox</li>
           <li>Installation de Debian 12</li>
           <li>Configuration réseau (IP statique)</li>
           <li>Installation Apache2</li>
@@ -1930,31 +758,20 @@
           <li>Installation PHP et modules nécessaires</li>
           <li>Déploiement et configuration de GLPI</li>
         </ul>
-
         <h3>3. Configuration base de données</h3>
-        <p>
-          Création d’une base de données dédiée à GLPI. Configuration d’un utilisateur SQL sécurisé avec droits restreints.
-          Sécurisation via <code>mysql_secure_installation</code>.
-        </p>
-
+        <p>Création d'une base de données dédiée à GLPI. Configuration d'un utilisateur SQL sécurisé avec droits restreints. Sécurisation via <code>mysql_secure_installation</code>.</p>
         <h4>Capture configuration base de données</h4>
         <img src="bdd_configuration.png" alt="Configuration base de données MariaDB" />
-
         <h3>4. Paramétrage fonctionnel dans GLPI</h3>
         <ul>
           <li>Création des entités</li>
           <li>Création des profils utilisateurs</li>
-          <li>Paramétrage des droits d’accès</li>
+          <li>Paramétrage des droits d'accès</li>
           <li>Configuration du système de tickets</li>
-          <li>Ajout des catégories d’incidents</li>
+          <li>Ajout des catégories d'incidents</li>
         </ul>
-
         <h3>5. Intégration LDAP</h3>
-        <p>
-          Mise en place d’une authentification centralisée via LDAP. Configuration du DN, du serveur LDAP et des filtres utilisateurs.
-          Tests de connexion et correction d’erreurs de bind.
-        </p>
-
+        <p>Mise en place d'une authentification centralisée via LDAP. Configuration du DN, du serveur LDAP et des filtres utilisateurs. Tests de connexion et correction d'erreurs de bind.</p>
         <h3>6. Gestion du parc</h3>
         <ul>
           <li>Ajout des postes de travail</li>
@@ -1963,22 +780,12 @@
           <li>Gestion des consommables</li>
           <li>Attribution des équipements aux utilisateurs</li>
         </ul>
-
         <h4>Capture gestion du parc</h4>
         <img src="glpi_parc_materiel.png" alt="Gestion du parc dans GLPI" />
-
         <h3>7. Sécurisation et sauvegarde</h3>
-        <p>
-          Réalisation d’un dump de la base MariaDB via <code>mysqldump</code>. Sauvegarde du fichier <code>glpi_backup.sql</code>.
-          Vérification de l’intégrité des données.
-        </p>
-
+        <p>Réalisation d'un dump de la base MariaDB via <code>mysqldump</code>. Sauvegarde du fichier <code>glpi_backup.sql</code>. Vérification de l'intégrité des données.</p>
         <h3>8. Résultat final</h3>
-        <p>
-          L’environnement est entièrement fonctionnel. Les utilisateurs peuvent se connecter via LDAP, ouvrir des tickets et consulter le parc informatique.
-          La solution répond aux besoins de gestion et de suivi.
-        </p>
-
+        <p>L'environnement est entièrement fonctionnel. Les utilisateurs peuvent se connecter via LDAP, ouvrir des tickets et consulter le parc informatique. La solution répond aux besoins de gestion et de suivi.</p>
         <h3>9. Compétences mobilisées</h3>
         <ul>
           <li>Administration système Linux</li>
@@ -1986,618 +793,330 @@
           <li>Gestion base de données</li>
           <li>Configuration réseau</li>
           <li>Gestion des droits utilisateurs</li>
-          <li>Diagnostic et résolution d’incidents</li>
+          <li>Diagnostic et résolution d'incidents</li>
         </ul>
       </section>
 
+      <!-- VEILLE -->
       <section id="veille" aria-labelledby="veille-title">
         <h2 id="veille-title">Veille technologique</h2>
-
-        <div class="veille-wrap">
-          <div class="card">
-            <p>
-              Thème : <strong>cybersécurité &amp; IA</strong> — comprendre comment
-              l’IA renforce les attaques (phishing, deepfakes, automatisation)
-              et comment les outils de défense s’adaptent.
-            </p>
-          </div>
-
-          <div class="veille-grid">
-            <div class="card">
-              <h3>Axes suivis</h3>
-              <ul>
-                <li><strong>Détection</strong> : EDR/XDR, NDR.</li>
-                <li><strong>Analyse</strong> : SIEM &amp; corrélation de logs.</li>
-                <li>
-                  <strong>Protection</strong> : anti-phishing / e-mail gateway.
-                </li>
-                <li><strong>Accès</strong> : MFA adaptatif, IAM.</li>
-              </ul>
+        <div class="veille-header-band">
+          <h3>Cybersécurité & Intelligence Artificielle</h3>
+          <p>Comment l'IA transforme le paysage des menaces informatiques — et comment les défenses s'adaptent en temps réel pour protéger les systèmes d'information.</p>
+        </div>
+        <div class="veille-layout">
+          <div class="veille-articles">
+            <div class="veille-article">
+              <div class="veille-article-header"><span class="veille-tag red">Menace</span><span class="veille-date">Janvier 2025</span></div>
+              <h4>L'IA au service des attaquants : phishing de nouvelle génération</h4>
+              <p>Les cybercriminels utilisent désormais des LLM (grands modèles de langage) pour générer des emails de phishing ultra-personnalisés, sans fautes, dans n'importe quelle langue. Ces attaques contournent les filtres classiques basés sur les signatures de texte. Le taux de clics sur ces messages est significativement plus élevé que sur les campagnes traditionnelles.</p>
+              <div class="veille-impact"><span class="veille-impact-item">Filtrage email renforcé</span><span class="veille-impact-item">Sensibilisation utilisateurs</span><span class="veille-impact-item">Analyse comportementale</span></div>
+              <a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener" class="veille-source-link">→ Source : ANSSI / CERT-FR</a>
             </div>
-
-            <div class="card">
-              <h3>Sources</h3>
-              <ul>
-                <li>
-                  <a
-                    href="https://www.cert.ssi.gouv.fr/"
-                    target="_blank"
-                    rel="noopener"
-                    >ANSSI (CERT-FR)</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://learn.microsoft.com/fr-fr/security/"
-                    target="_blank"
-                    rel="noopener"
-                    >Microsoft Security</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://www.cisco.com/c/fr_fr/solutions/security.html"
-                    target="_blank"
-                    rel="noopener"
-                    >Cisco Security</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://www.crowdstrike.com/cybersecurity-101/"
-                    target="_blank"
-                    rel="noopener"
-                    >CrowdStrike (ressources)</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://www.ibm.com/topics/cybersecurity"
-                    target="_blank"
-                    rel="noopener"
-                    >IBM (articles)</a
-                  >
-                </li>
-              </ul>
+            <div class="veille-article">
+              <div class="veille-article-header"><span class="veille-tag purple">IA Défensive</span><span class="veille-date">Février 2025</span></div>
+              <h4>EDR et XDR : la détection comportementale dopée à l'IA</h4>
+              <p>Les solutions EDR (Endpoint Detection & Response) et XDR (Extended Detection & Response) intègrent désormais des modèles d'apprentissage automatique capables de détecter des comportements anormaux en quelques secondes. CrowdStrike Falcon ou Microsoft Defender for Endpoint analysent des millions d'événements en temps réel pour identifier des menaces zero-day, même inconnues des bases de signatures.</p>
+              <div class="veille-impact"><span class="veille-impact-item">Réduction du temps de détection</span><span class="veille-impact-item">Réponse automatisée</span><span class="veille-impact-item">Zero-day coverage</span></div>
+              <a href="https://www.crowdstrike.com/cybersecurity-101/" target="_blank" rel="noopener" class="veille-source-link">→ Source : CrowdStrike</a>
+            </div>
+            <div class="veille-article">
+              <div class="veille-article-header"><span class="veille-tag orange">Deepfake</span><span class="veille-date">Mars 2025</span></div>
+              <h4>Deepfakes vocaux et vidéo : la fraude au président 2.0</h4>
+              <p>Des deepfakes audio et vidéo sont utilisés dans des attaques de type "fraude au président" : des employés reçoivent des appels ou des visioconférences avec un faux dirigeant leur demandant des virements urgents. Des entreprises ont subi des pertes de plusieurs millions d'euros. L'authentification multi-facteurs et les procédures de validation hors-bande deviennent essentielles pour contrer ces scénarios.</p>
+              <div class="veille-impact"><span class="veille-impact-item">MFA renforcé</span><span class="veille-impact-item">Procédures de validation</span><span class="veille-impact-item">Formation dirigeants</span></div>
+              <a href="https://www.ibm.com/topics/cybersecurity" target="_blank" rel="noopener" class="veille-source-link">→ Source : IBM Security</a>
+            </div>
+            <div class="veille-article">
+              <div class="veille-article-header"><span class="veille-tag green">Réglementation</span><span class="veille-date">Avril 2025</span></div>
+              <h4>NIS2 et IA Act : le nouveau cadre réglementaire européen</h4>
+              <p>La directive NIS2 (Network and Information Security) élargit les obligations de cybersécurité à de nouveaux secteurs, dont la culture et les institutions publiques. Combinée à l'AI Act européen, elle impose aux organisations d'auditer leurs systèmes IA utilisés en sécurité. Les DSI doivent désormais documenter leurs outils IA et prouver leur conformité.</p>
+              <div class="veille-impact"><span class="veille-impact-item">Audit des systèmes IA</span><span class="veille-impact-item">Documentation obligatoire</span><span class="veille-impact-item">Conformité RGPD/NIS2</span></div>
+              <a href="https://learn.microsoft.com/fr-fr/security/" target="_blank" rel="noopener" class="veille-source-link">→ Source : Microsoft Security</a>
+            </div>
+            <div class="veille-article">
+              <div class="veille-article-header"><span class="veille-tag blue">Infrastructure</span><span class="veille-date">Avril 2025</span></div>
+              <h4>Zero Trust Architecture : vers un modèle "ne jamais faire confiance"</h4>
+              <p>Le modèle Zero Trust repose sur le principe qu'aucun utilisateur, appareil ou flux réseau n'est digne de confiance par défaut, même à l'intérieur du réseau interne. Cette approche, popularisée par Microsoft et Cisco, implique une vérification continue des identités, une micro-segmentation des réseaux et une authentification conditionnelle basée sur le contexte (localisation, heure, comportement).</p>
+              <div class="veille-impact"><span class="veille-impact-item">Micro-segmentation</span><span class="veille-impact-item">IAM adaptatif</span><span class="veille-impact-item">MFA conditionnel</span></div>
+              <a href="https://www.cisco.com/c/fr_fr/solutions/security.html" target="_blank" rel="noopener" class="veille-source-link">→ Source : Cisco Security</a>
             </div>
           </div>
-
-          <div class="card">
-            <h3>Organisation</h3>
-            <ul>
-              <li>Lecture régulière + sélection des infos utiles.</li>
-              <li>Notes courtes : menace → impact → mesure de sécurité.</li>
-              <li>Synthèse : durcissement, MFA, segmentation, sensibilisation.</li>
-            </ul>
+          <div class="veille-sidebar">
+            <div class="veille-sidebar-card">
+              <h4>🎯 Axes de veille suivis</h4>
+              <ul class="veille-axes">
+                <li class="veille-axe"><div class="veille-axe-dot" style="background:#ef4444;"></div><span><strong>Détection</strong> : EDR/XDR, NDR, analyse comportementale</span></li>
+                <li class="veille-axe"><div class="veille-axe-dot" style="background:#8b5cf6;"></div><span><strong>IA offensive</strong> : phishing automatisé, deepfakes, génération de malwares</span></li>
+                <li class="veille-axe"><div class="veille-axe-dot" style="background:#3b82f6;"></div><span><strong>SIEM & logs</strong> : corrélation d'événements, alertes temps réel</span></li>
+                <li class="veille-axe"><div class="veille-axe-dot" style="background:#22c55e;"></div><span><strong>Réglementation</strong> : RGPD, NIS2, AI Act européen</span></li>
+                <li class="veille-axe"><div class="veille-axe-dot" style="background:#f59e0b;"></div><span><strong>Accès & identité</strong> : MFA adaptatif, Zero Trust, IAM</span></li>
+              </ul>
+            </div>
+            <div class="veille-sidebar-card">
+              <h4>📡 Sources consultées</h4>
+              <ul class="veille-sources-list">
+                <li><a href="https://www.cert.ssi.gouv.fr/" target="_blank" rel="noopener" class="veille-source-row"><div class="veille-source-icon" style="background:#003189;"><svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="4" fill="#003189"/><path d="M16 4L4 10v8c0 6.6 5.1 12.8 12 14.3C22.9 30.8 28 24.6 28 18v-8L16 4z" fill="#fff" opacity="0.9"/><path d="M13 16.5l2.5 2.5 5-5" stroke="#003189" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="veille-source-name">ANSSI – CERT-FR</span><span class="veille-source-desc">Alertes & bulletins officiels</span></div></a></li>
+                <li><a href="https://learn.microsoft.com/fr-fr/security/" target="_blank" rel="noopener" class="veille-source-row"><div class="veille-source-icon" style="background:#0078d4;"><svg width="16" height="16" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg"><path fill="#f3f3f3" d="M0 0h11v11H0zm12 0h11v11H12zM0 12h11v11H0zm12 0h11v11H12z"/></svg></div><div><span class="veille-source-name">Microsoft Security</span><span class="veille-source-desc">Documentation & actualités</span></div></a></li>
+                <li><a href="https://www.cisco.com/c/fr_fr/solutions/security.html" target="_blank" rel="noopener" class="veille-source-row"><div class="veille-source-icon" style="background:#1ba0d7;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div><div><span class="veille-source-name">Cisco Security</span><span class="veille-source-desc">Rapports menaces & réseau</span></div></a></li>
+                <li><a href="https://www.crowdstrike.com/cybersecurity-101/" target="_blank" rel="noopener" class="veille-source-row"><div class="veille-source-icon" style="background:#e4002b;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><span class="veille-source-name">CrowdStrike</span><span class="veille-source-desc">EDR, threat intelligence</span></div></a></li>
+                <li><a href="https://www.ibm.com/topics/cybersecurity" target="_blank" rel="noopener" class="veille-source-row"><div class="veille-source-icon" style="background:#1f70c1;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="3" rx="1"/><rect x="2" y="11" width="20" height="3" rx="1"/><rect x="2" y="16" width="20" height="3" rx="1"/></svg></div><div><span class="veille-source-name">IBM Security</span><span class="veille-source-desc">Analyses & études de cas</span></div></a></li>
+              </ul>
+            </div>
+            <div class="veille-sidebar-card">
+              <h4>🗂️ Méthode d'organisation</h4>
+              <div class="veille-timeline">
+                <div class="veille-tl-item"><div class="veille-tl-date">Hebdomadaire</div><div class="veille-tl-text">Lecture des bulletins CERT-FR et flux RSS des sources sélectionnées.</div></div>
+                <div class="veille-tl-item"><div class="veille-tl-date">Sélection</div><div class="veille-tl-text">Tri des informations pertinentes selon leur impact potentiel sur mon environnement de travail.</div></div>
+                <div class="veille-tl-item"><div class="veille-tl-date">Analyse</div><div class="veille-tl-text">Rédaction de notes : menace identifiée → impact → mesure de sécurité associée.</div></div>
+                <div class="veille-tl-item"><div class="veille-tl-date">Synthèse</div><div class="veille-tl-text">Consolidation mensuelle : durcissement des postes, MFA, segmentation réseau, sensibilisation.</div></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
     </main>
 
-    <!-- Bouton haut de page -->
     <button id="backToTop" aria-label="Revenir en haut">↑</button>
 
-    <!-- Barre Jury flottante -->
-    <div
-      id="jury-controls"
-      role="toolbar"
-      aria-label="Contrôles présentation jury"
-    >
-      <button id="jury-prev" title="Section précédente">⬅️</button>
-      <button id="jury-next" title="Section suivante">➡️</button>
-      <button id="jury-quit" class="quit" title="Quitter la présentation">
-        ❌
-      </button>
+    <div id="jury-controls" role="toolbar" aria-label="Contrôles présentation jury">
+      <button id="jury-prev" title="Section précédente">◀</button>
+      <span id="section-counter">1 / 9</span>
+      <button id="jury-next" title="Section suivante">▶</button>
+      <button id="jury-quit" class="quit" title="Quitter la présentation">✕ Quitter</button>
     </div>
 
-    <footer
-      style="
-        max-width: 1100px;
-        margin: 2rem auto 3rem;
-        padding: 0 2rem;
-        color: #475569;
-        text-align: center;
-      "
-    >
-      <span id="sig"
-        >Site réalisé par <strong>Danis Gouedart</strong> — BTS SIO SISR — ©
-        2025</span
-      >
+    <footer style="max-width:1100px;margin:2rem auto 3rem;padding:0 2rem;color:#475569;text-align:center;">
+      <span id="sig">Site réalisé par <strong>Danis Gouedart</strong> — BTS SIO SISR — © 2025</span>
     </footer>
 
     <script>
-      // ========= Canvas Réseau (subtil, adaptatif au thème) =========
+      // ===== Canvas Réseau =====
       (function () {
         const c = document.getElementById("bg-network");
         const ctx = c.getContext("2d");
         let w, h, DPR, nodes, links;
-
         function resize() {
           DPR = Math.min(window.devicePixelRatio || 1, 2);
-          w = (c.width = innerWidth * DPR);
-          h = (c.height = innerHeight * DPR);
-          c.style.width = innerWidth + "px";
-          c.style.height = innerHeight + "px";
+          w = (c.width = innerWidth * DPR); h = (c.height = innerHeight * DPR);
+          c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
           initGraph();
         }
-
         function themeColors() {
           const dark = document.body.dataset.theme === "dark";
-          return {
-            node: dark ? "rgba(56,132,255,0.85)" : "rgba(96,165,250,0.95)",
-            line: dark ? "rgba(37,99,235,0.22)" : "rgba(59,130,246,0.20)",
-            glow: dark ? "rgba(30,64,175,0.65)" : "rgba(96,165,250,0.55)",
-          };
+          return { node: dark ? "rgba(56,132,255,0.85)" : "rgba(96,165,250,0.95)", line: dark ? "rgba(37,99,235,0.22)" : "rgba(59,130,246,0.20)", glow: dark ? "rgba(30,64,175,0.65)" : "rgba(96,165,250,0.55)" };
         }
-
         function initGraph() {
           const count = Math.round((innerWidth * innerHeight) / 22000);
           nodes = [];
-
-          for (let i = 0; i < count; i++) {
-            nodes.push({
-              x: Math.random() * w,
-              y: Math.random() * h,
-              vx: (Math.random() - 0.5) * 0.18,
-              vy: (Math.random() - 0.5) * 0.18,
-              r: Math.random() * 2 + 1.2,
-            });
-          }
-
+          for (let i = 0; i < count; i++) nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18, r: Math.random() * 2 + 1.2 });
           links = [];
-          for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-              const dx = nodes[i].x - nodes[j].x;
-              const dy = nodes[i].y - nodes[j].y;
-              const d2 = dx * dx + dy * dy;
-              const max = 180 * DPR;
-
-              if (d2 < max * max) links.push({ a: i, b: j });
-            }
-          }
+          for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) { const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y, d2 = dx*dx+dy*dy, max = 180*DPR; if (d2 < max*max) links.push({ a: i, b: j }); }
         }
-
         function tick() {
           const { node, line, glow } = themeColors();
-          ctx.clearRect(0, 0, w, h);
-          ctx.lineWidth = 1;
-
-          for (const L of links) {
-            const A = nodes[L.a],
-              B = nodes[L.b];
-            const d = Math.hypot(A.x - B.x, A.y - B.y);
-            const alpha = Math.max(0, 1 - d / (180 * DPR));
-            if (alpha <= 0) continue;
-
-            ctx.strokeStyle =
-              line.replace(/[\d.]+\)$/, "") + alpha.toFixed(3) + ")";
-            ctx.beginPath();
-            ctx.moveTo(A.x, A.y);
-            ctx.lineTo(B.x, B.y);
-            ctx.stroke();
-          }
-
-          for (const p of nodes) {
-            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 10);
-            g.addColorStop(0, glow);
-            g.addColorStop(1, "rgba(0,0,0,0)");
-
-            ctx.fillStyle = g;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r * 10, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = node;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fill();
-
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < -20) p.x = w + 20;
-            if (p.x > w + 20) p.x = -20;
-            if (p.y < -20) p.y = h + 20;
-            if (p.y > h + 20) p.y = -20;
-          }
-
+          ctx.clearRect(0, 0, w, h); ctx.lineWidth = 1;
+          for (const L of links) { const A = nodes[L.a], B = nodes[L.b]; const d = Math.hypot(A.x-B.x, A.y-B.y); const alpha = Math.max(0, 1 - d/(180*DPR)); if (alpha <= 0) continue; ctx.strokeStyle = line.replace(/[\d.]+\)$/, "") + alpha.toFixed(3) + ")"; ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke(); }
+          for (const p of nodes) { const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*10); g.addColorStop(0, glow); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r*10, 0, Math.PI*2); ctx.fill(); ctx.fillStyle = node; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill(); p.x += p.vx; p.y += p.vy; if (p.x < -20) p.x = w+20; if (p.x > w+20) p.x = -20; if (p.y < -20) p.y = h+20; if (p.y > h+20) p.y = -20; }
           requestAnimationFrame(tick);
         }
-
         window.addEventListener("resize", resize, { passive: true });
-        const mo = new MutationObserver(resize);
-        mo.observe(document.body, {
-          attributes: true,
-          attributeFilter: ["data-theme"],
-        });
-
-        resize();
-        tick();
+        new MutationObserver(resize).observe(document.body, { attributes: true, attributeFilter: ["data-theme"] });
+        resize(); tick();
       })();
 
-      // ========= Ripple effect =========
+      // ===== Ripple =====
       function addRipple(e) {
-        const el = e.currentTarget;
-        const circle = document.createElement("span");
-        const rect = el.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-
-        circle.className = "ripple";
-        circle.style.width = circle.style.height = size * 0.6 + "px";
+        const el = e.currentTarget, circle = document.createElement("span"), rect = el.getBoundingClientRect(), size = Math.max(rect.width, rect.height);
+        circle.className = "ripple"; circle.style.width = circle.style.height = size * 0.6 + "px";
         circle.style.left = e.clientX - rect.left - (size * 0.6) / 2 + "px";
         circle.style.top = e.clientY - rect.top - (size * 0.6) / 2 + "px";
-
-        el.appendChild(circle);
-        circle.addEventListener("animationend", () => circle.remove());
+        el.appendChild(circle); circle.addEventListener("animationend", () => circle.remove());
       }
 
-      // ========= Navigation interne + sauvegarde dernière section + transition =========
-      const links = document.querySelectorAll("a[data-target]");
+      // ===== Navigation =====
+      const allLinks = document.querySelectorAll("a[data-target]");
       const sections = document.querySelectorAll("main section");
       const navLinks = document.querySelectorAll("nav a[data-target]");
+      const indicator = document.getElementById("section-indicator");
+      const sectionNames = { accueil: "Accueil", presentation_apprenti: "Présentation apprenti", presentation_entreprise: "Présentation entreprise", epreuveE5_synthese: "E5 – Synthèse", epreuveE5_formation: "E5 – Formation", epreuveE5_entreprise: "E5 – Entreprise", epreuveE5_certifications: "E5 – Certifications", epreuveE6_situation: "E6 – Situation", epreuveE6_production: "E6 – Production", veille: "Veille technologique" };
+      const order = Array.from(sections).map(s => s.id);
+
+      function updateIndicator(id) {
+        const idx = order.indexOf(id);
+        if (idx === -1) return;
+        indicator.textContent = `Section ${idx + 1} / ${order.length}`;
+        indicator.classList.add("visible");
+        clearTimeout(indicator._t);
+        indicator._t = setTimeout(() => indicator.classList.remove("visible"), 2500);
+      }
+
+      function updateCounter(id) {
+        const idx = order.indexOf(id);
+        const el = document.getElementById("section-counter");
+        if (el) el.textContent = `${idx + 1} / ${order.length}`;
+      }
 
       function activateSection(id) {
-        sections.forEach((s) => s.classList.remove("active"));
-
-        const targetSection = document.getElementById(id);
-        if (targetSection) {
-          targetSection.classList.add("active");
-          targetSection.classList.add("transition-enter");
-
-          requestAnimationFrame(() =>
-            targetSection.classList.add("transition-enter-active")
-          );
-
-          setTimeout(
-            () =>
-              targetSection.classList.remove(
-                "transition-enter",
-                "transition-enter-active"
-              ),
-            500
-          );
-
-          targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
-          navLinks.forEach((a) =>
-            a.classList.toggle(
-              "active-link",
-              a.getAttribute("data-target") === id
-            )
-          );
+        sections.forEach(s => s.classList.remove("active"));
+        const target = document.getElementById(id);
+        if (target) {
+          target.classList.add("active", "transition-enter");
+          requestAnimationFrame(() => target.classList.add("transition-enter-active"));
+          setTimeout(() => target.classList.remove("transition-enter", "transition-enter-active"), 500);
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          navLinks.forEach(a => a.classList.toggle("active-link", a.getAttribute("data-target") === id));
+          updateIndicator(id);
+          updateCounter(id);
+          // Animer les barres de compétences si section apprenti
+          if (id === "presentation_apprenti") animateSkills();
         }
       }
 
-      links.forEach((link) => {
-        link.addEventListener(
-          "click",
-          (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("data-target");
-            localStorage.setItem("lastSection", targetId);
-            activateSection(targetId);
-          },
-          { passive: false }
-        );
-
+      allLinks.forEach(link => {
+        link.addEventListener("click", e => { e.preventDefault(); const t = link.getAttribute("data-target"); localStorage.setItem("lastSection", t); activateSection(t); }, { passive: false });
         link.addEventListener("click", addRipple, { passive: true });
         link.classList.add("tap-bump");
       });
 
       const last = localStorage.getItem("lastSection");
       if (last && document.getElementById(last)) activateSection(last);
+      else updateCounter("accueil");
 
-      // ========= Thème sombre/clair (clair par défaut) =========
+      // ===== Barres de compétences =====
+      function animateSkills() {
+        document.querySelectorAll(".skill-bar-fill").forEach(bar => {
+          const pct = bar.getAttribute("data-pct");
+          setTimeout(() => { bar.style.width = pct + "%"; }, 150);
+        });
+      }
+      // Si on arrive direct sur apprenti au chargement
+      if (!last || last === "presentation_apprenti") animateSkills();
+
+      // ===== Thème =====
       const toggle = document.getElementById("theme-toggle");
       const thumb = toggle.querySelector(".thumb");
-      const storedTheme = localStorage.getItem("theme");
-
-      const applyTheme = (t) => {
-        document.body.dataset.theme = t;
-        localStorage.setItem("theme", t);
+      const applyTheme = t => {
+        document.body.dataset.theme = t; localStorage.setItem("theme", t);
         thumb.textContent = t === "dark" ? "☀️" : "🌙";
         document.body.style.filter = "opacity(.98)";
         setTimeout(() => (document.body.style.filter = ""), 200);
       };
+      applyTheme(localStorage.getItem("theme") === "dark" ? "dark" : "light");
+      toggle.addEventListener("click", () => applyTheme(document.body.dataset.theme === "dark" ? "light" : "dark"), { passive: true });
 
-      applyTheme(storedTheme === "dark" ? "dark" : "light");
-
-      toggle.addEventListener(
-        "click",
-        () => {
-          const next = document.body.dataset.theme === "dark" ? "light" : "dark";
-          applyTheme(next);
-        },
-        { passive: true }
-      );
-
-      // ========= Intro auto : ~2s puis fondu (sans audio) =========
+      // ===== Intro =====
       const intro = document.getElementById("intro-screen");
       const introSkip = document.getElementById("intro-skip");
       const introDisable = document.getElementById("intro-disable");
-
       function hideIntroNow() {
         if (!intro || !document.body.contains(intro)) return;
         intro.classList.add("intro-hidden");
-        setTimeout(() => {
-          if (document.body.contains(intro)) intro.remove();
-        }, 820);
+        setTimeout(() => { if (document.body.contains(intro)) intro.remove(); }, 820);
       }
-
-      (function initIntro() {
-        try {
-          if (
-            localStorage.getItem("introDisabled") === "true" ||
-            localStorage.getItem("introSeen") === "true"
-          ) {
-            if (intro) intro.remove();
-            return;
-          }
-        } catch (e) {}
-
-        window.addEventListener("DOMContentLoaded", () => {
-          setTimeout(() => {
-            hideIntroNow();
-            try {
-              localStorage.setItem("introSeen", "true");
-            } catch (e) {}
-          }, 2000);
-        });
-
-        if (introSkip)
-          introSkip.addEventListener(
-            "click",
-            () => {
-              hideIntroNow();
-              try {
-                localStorage.setItem("introSeen", "true");
-              } catch (e) {}
-            },
-            { passive: true }
-          );
-
-        if (introDisable)
-          introDisable.addEventListener(
-            "click",
-            () => {
-              try {
-                localStorage.setItem("introDisabled", "true");
-              } catch (e) {}
-              hideIntroNow();
-            },
-            { passive: true }
-          );
-
-        window.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            hideIntroNow();
-            try {
-              localStorage.setItem("introSeen", "true");
-            } catch (e) {}
-          }
-        });
-
-        window.addEventListener("load", () => {
-          setTimeout(() => {
-            if (document.body.contains(intro)) {
-              hideIntroNow();
-              try {
-                localStorage.setItem("introSeen", "true");
-              } catch (e) {}
-            }
-          }, 3000);
-        });
+      (function () {
+        try { if (localStorage.getItem("introDisabled") === "true" || localStorage.getItem("introSeen") === "true") { if (intro) intro.remove(); return; } } catch(e) {}
+        window.addEventListener("DOMContentLoaded", () => setTimeout(() => { hideIntroNow(); try { localStorage.setItem("introSeen","true"); } catch(e){} }, 2000));
+        introSkip && introSkip.addEventListener("click", () => { hideIntroNow(); try { localStorage.setItem("introSeen","true"); } catch(e){} }, { passive: true });
+        introDisable && introDisable.addEventListener("click", () => { try { localStorage.setItem("introDisabled","true"); } catch(e){} hideIntroNow(); }, { passive: true });
+        window.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { hideIntroNow(); try { localStorage.setItem("introSeen","true"); } catch(e){} } });
+        window.addEventListener("load", () => setTimeout(() => { if (document.body.contains(intro)) { hideIntroNow(); try { localStorage.setItem("introSeen","true"); } catch(e){} } }, 3000));
       })();
 
-      // ========= Lazy fade-in images =========
+      // ===== Lazy images =====
       const lazyImgs = document.querySelectorAll('img[loading="lazy"]');
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("loaded");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: "100px" }
-      );
-      lazyImgs.forEach((img) => io.observe(img));
+      const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("loaded"); io.unobserve(e.target); } }), { rootMargin: "100px" });
+      lazyImgs.forEach(img => io.observe(img));
 
-      // ========= Scroll progress bar + Parallaxe + BackToTop =========
+      // ===== Scroll / Progress / BackToTop =====
       const progress = document.getElementById("progress");
       const backToTop = document.getElementById("backToTop");
-
       const onScroll = () => {
         const scrollY = window.scrollY || document.documentElement.scrollTop;
         const docH = document.documentElement.scrollHeight - window.innerHeight;
-        const percent = Math.max(0, Math.min(1, scrollY / (docH || 1)));
-
-        progress.style.width = percent * 100 + "%";
-
-        if (scrollY > 300) backToTop.classList.add("show");
-        else backToTop.classList.remove("show");
-
+        progress.style.width = Math.max(0, Math.min(1, scrollY / (docH || 1))) * 100 + "%";
+        backToTop.classList.toggle("show", scrollY > 300);
         document.body.style.setProperty("--parallaxY", scrollY * 0.02 + "px");
         document.body.style.setProperty("--parallaxX", scrollY * 0.01 + "px");
       };
+      window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }), { passive: true });
 
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
+      // ===== Section observer =====
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(a => a.classList.toggle("active-link", a.getAttribute("data-target") === id));
+            const h2 = entry.target.querySelector("h2");
+            if (h2) { h2.classList.add("inview"); setTimeout(() => h2.classList.remove("inview"), 1200); }
+          }
+        });
+      }, { threshold: 0.55 });
+      sections.forEach(s => sectionObserver.observe(s));
 
-      backToTop.addEventListener(
-        "click",
-        () => window.scrollTo({ top: 0, behavior: "smooth" }),
-        { passive: true }
-      );
-
-      // ========= Surbrillance menu selon section visible =========
-      const sectionObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.id;
-
-              navLinks.forEach((a) => {
-                a.classList.toggle(
-                  "active-link",
-                  a.getAttribute("data-target") === id
-                );
-              });
-
-              const h2 = entry.target.querySelector("h2");
-              if (h2) {
-                h2.classList.add("inview");
-                setTimeout(() => h2.classList.remove("inview"), 1200);
-              }
-            }
-          });
-        },
-        { threshold: 0.55 }
-      );
-      sections.forEach((s) => sectionObserver.observe(s));
-
-      // ========= Mode Présentation Jury =========
+      // ===== Mode Jury (amélioré : centré en bas) =====
       const presBtn = document.getElementById("presentation-mode");
       const juryBar = document.getElementById("jury-controls");
       const juryPrev = document.getElementById("jury-prev");
       const juryNext = document.getElementById("jury-next");
       const juryQuit = document.getElementById("jury-quit");
-
       let presOn = false;
-
       const headerEl = document.querySelector("header");
       const navEl = document.querySelector("nav");
-      const fullEl = document.documentElement;
 
-      const order = Array.from(document.querySelectorAll("main section")).map(
-        (s) => s.id
-      );
-
-      function currentSectionIndex() {
-        const active = document.querySelector("main section.active");
-        return Math.max(0, order.indexOf(active?.id || "accueil"));
-      }
-
-      function navigate(delta) {
-        const i = currentSectionIndex();
-        const nextIndex = Math.min(order.length - 1, Math.max(0, i + delta));
-        const nextId = order[nextIndex];
-        localStorage.setItem("lastSection", nextId);
-        activateSection(nextId);
-      }
+      function currentSectionIndex() { const active = document.querySelector("main section.active"); return Math.max(0, order.indexOf(active?.id || "accueil")); }
+      function navigate(delta) { const i = currentSectionIndex(); const nextId = order[Math.min(order.length-1, Math.max(0, i+delta))]; localStorage.setItem("lastSection", nextId); activateSection(nextId); }
 
       function enterPresentation() {
         presOn = true;
-
-        headerEl.style.opacity = "0";
-        navEl.style.opacity = "0";
-        headerEl.style.transform = "translateY(-10px)";
-        navEl.style.transform = "translateY(-10px)";
-
-        setTimeout(() => {
-          headerEl.style.display = "none";
-          navEl.style.display = "none";
-        }, 220);
-
+        headerEl.style.opacity = "0"; navEl.style.opacity = "0";
+        headerEl.style.transform = "translateY(-10px)"; navEl.style.transform = "translateY(-10px)";
+        setTimeout(() => { headerEl.style.display = "none"; navEl.style.display = "none"; }, 220);
         document.querySelector(".progress-bar").style.display = "none";
         document.getElementById("backToTop").style.display = "none";
         juryBar.style.display = "flex";
-
-        if (fullEl.requestFullscreen) fullEl.requestFullscreen().catch(() => {});
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
         presBtn.textContent = "⤺ Quitter";
+        updateCounter(order[currentSectionIndex()]);
       }
 
       function exitPresentation() {
         presOn = false;
-
-        headerEl.style.display = "";
-        navEl.style.display = "";
-
-        requestAnimationFrame(() => {
-          headerEl.style.opacity = "1";
-          navEl.style.opacity = "1";
-          headerEl.style.transform = "none";
-          navEl.style.transform = "none";
-        });
-
+        headerEl.style.display = ""; navEl.style.display = "";
+        requestAnimationFrame(() => { headerEl.style.opacity = "1"; navEl.style.opacity = "1"; headerEl.style.transform = "none"; navEl.style.transform = "none"; });
         document.querySelector(".progress-bar").style.display = "";
         document.getElementById("backToTop").style.display = "";
         juryBar.style.display = "none";
-
-        if (document.fullscreenElement && document.exitFullscreen)
-          document.exitFullscreen().catch(() => {});
-
+        if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
         presBtn.textContent = "🎤 Présentation";
       }
 
-      function togglePresentation() {
-        presOn ? exitPresentation() : enterPresentation();
-      }
-
-      presBtn.addEventListener("click", togglePresentation, { passive: true });
+      presBtn.addEventListener("click", () => presOn ? exitPresentation() : enterPresentation(), { passive: true });
       juryPrev.addEventListener("click", () => navigate(-1), { passive: true });
       juryNext.addEventListener("click", () => navigate(1), { passive: true });
       juryQuit.addEventListener("click", exitPresentation, { passive: true });
-
-      window.addEventListener("keydown", (e) => {
+      window.addEventListener("keydown", e => {
         if (!presOn) return;
-
-        if (e.key === "ArrowLeft") {
-          e.preventDefault();
-          navigate(-1);
-        }
-        if (e.key === "ArrowRight") {
-          e.preventDefault();
-          navigate(1);
-        }
-        if (e.key === "Escape") {
-          e.preventDefault();
-          exitPresentation();
-        }
+        if (e.key === "ArrowLeft") { e.preventDefault(); navigate(-1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); navigate(1); }
+        if (e.key === "Escape") { e.preventDefault(); exitPresentation(); }
       });
 
-      // ========= Ripple sur mission cards et liens =========
-      document
-        .querySelectorAll(".mission-card, .welcome-links a, nav > ul > li > a")
-        .forEach((el) => {
-          el.addEventListener("click", addRipple, { passive: true });
-        });
+      // ===== Ripple sur les cartes =====
+      document.querySelectorAll(".mission-card, .welcome-links a, nav > ul > li > a").forEach(el => el.addEventListener("click", addRipple, { passive: true }));
 
-      // ========= Initialisation de la CARTE (Leaflet) =========
-      (function initMap() {
+      // ===== Carte Leaflet =====
+      (function () {
         const el = document.getElementById("map-cf");
         if (!el) return;
-
         const cf = [48.8638, 2.3376];
-
-        const map = L.map(el, {
-          zoomControl: true,
-          scrollWheelZoom: false,
-          attributionControl: true,
-        }).setView(cf, 16);
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19,
-          attribution: "&copy; OpenStreetMap contributors",
-        }).addTo(map);
-
-        const marker = L.marker(cf).addTo(map);
-        marker
-          .bindPopup("<b>Comédie-Française</b><br>1 Pl. Colette, 75001 Paris")
-          .openPopup();
-
-        const observer = new MutationObserver(() => {
-          map.invalidateSize(false);
-        });
-        observer.observe(document.getElementById("presentation_entreprise"), {
-          attributes: true,
-          attributeFilter: ["class"],
-        });
-
-        window.addEventListener("resize", () => map.invalidateSize(false), {
-          passive: true,
-        });
+        const map = L.map(el, { zoomControl: true, scrollWheelZoom: false, attributionControl: true }).setView(cf, 16);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+        L.marker(cf).addTo(map).bindPopup("<b>Comédie-Française</b><br>1 Pl. Colette, 75001 Paris").openPopup();
+        new MutationObserver(() => map.invalidateSize(false)).observe(document.getElementById("presentation_entreprise"), { attributes: true, attributeFilter: ["class"] });
+        window.addEventListener("resize", () => map.invalidateSize(false), { passive: true });
       })();
     </script>
   </body>
